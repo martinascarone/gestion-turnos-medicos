@@ -116,7 +116,14 @@ profesionales = [
      "disponibilidad": [
         {"dia": "Viernes", "horarios": [{"hora": 9, "reservado": False}, {"hora": 10, "reservado": False}, 
                                         {"hora": 11, "reservado": False}, {"hora": 12, "reservado": False}, 
-                                        {"hora": 13, "reservado": False}]}]}
+                                        {"hora": 13, "reservado": False}]}]},
+    
+    {"ID": "5", "nombre": "Mariana", "apellido": "Isola", "especialidad": "Nutricionista", 
+     "disponibilidad": [
+        {"dia": "Viernes", "horarios": [{"hora": 10, "reservado": False}, {"hora": 11, "reservado": False}, 
+                                      {"hora": 12, "reservado": False}, {"hora": 13, "reservado": False}]},
+        {"dia": "Sabado", "horarios": [{"hora": 10, "reservado": False}, {"hora": 11, "reservado": False}, 
+                                          {"hora": 12, "reservado": False}]}]}
 ]
 
 """Horarios asignados:
