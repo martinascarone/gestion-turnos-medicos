@@ -77,27 +77,96 @@ def mostrarTurnoMedico(matriz)
 
 
 
-#ingresar especialidad
+#Creamos una lista de diccionarios para poder acceder a los daos de los profecionales de forma sencilla
+profesionales = [
+    {"ID": "1", "nombre": "Carlos", "apellido": "Maslaton", "especialidad": "Oftalmologo", 
+     "disponibilidad": [
+        {"dia": "Lunes", "horarios": [{"hora": 13, "reservado": False}, {"hora": 14, "reservado": False}, 
+                                      {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}]},
+        {"dia": "Miercoles", "horarios": [{"hora": 13, "reservado": False}, {"hora": 14, "reservado": False}, 
+                                          {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}]},
+        {"dia": "Jueves", "horarios": [{"hora": 13, "reservado": False}, {"hora": 14, "reservado": False}, 
+                                       {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}]}
+     ]},
+    
+    {"ID": "2", "nombre": "Juan", "apellido": "Rodriguez", "especialidad": "Oftalmologo", 
+     "disponibilidad": [
+        {"dia": "Martes", "horarios": [{"hora": 13, "reservado": False}, {"hora": 14, "reservado": False}, 
+                                        {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}, 
+                                        {"hora": 17, "reservado": False}]},
+        {"dia": "Viernes", "horarios": [{"hora": 13, "reservado": False}, {"hora": 14, "reservado": False}, 
+                                        {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}, 
+                                        {"hora": 17, "reservado": False}]},
+        {"dia": "Sábado", "horarios": [{"hora": 13, "reservado": False}, {"hora": 14, "reservado": False}, 
+                                        {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}, 
+                                        {"hora": 17, "reservado": False}]}
 
-#main
-# Ejemplo de uso
-matrizProfesionales = [[
-    "ID Profesional", "Nombre", "Apellido", "Especialidad"
-], ["1", "Carlos", "Maslaton", "Oftalmologo"],
-                       ["2", "Juan", "Rodriguez", "Oftalmologo"],
-                       ["3", "Juana", "Gomez", "Pediatra"],
-                       ["4", "Martina", "Quintana", "Nutricionista"]]
-matrizHorarios = [[
-    "ID Profesional", "Dia", "Horario de entrada", "Horario de salida"
-], ["1", "Lunes", 13, 18], ["1", "Miercoles", 13, 18], ["1", "Jueves", 13, 18],
-                  ["2", "Viernes", 13, 18], ["3", "Lunes", 10, 14],
-                  ["3", "Martes", 14, 19], ["3", "Jueves", 9, 14],
-                  ["4", "Lunes", 10, 14]]
-pacienteMatriz = [["id", "nombre", "apellido", "dni"]]
+     ]},
+    
+    {"ID": "3", "nombre": "Carla", "apellido": "Gomez", "especialidad": "Pediatra", 
+     "disponibilidad": [
+        {"dia": "Lunes", "horarios": [{"hora": 10, "reservado": False}, {"hora": 11, "reservado": False}, 
+                                      {"hora": 12, "reservado": False}, {"hora": 13, "reservado": False}]},
+        {"dia": "Martes", "horarios": [{"hora": 14, "reservado": False}, {"hora": 15, "reservado": False}, 
+                                       {"hora": 16, "reservado": False}, {"hora": 17, "reservado": False}, 
+                                       {"hora": 18, "reservado": False}]},
+        {"dia": "Jueves", "horarios": [{"hora": 9, "reservado": False}, {"hora": 10, "reservado": False}, 
+                                       {"hora": 11, "reservado": False}, {"hora": 12, "reservado": False}, 
+                                       {"hora": 13, "reservado": False}]}
+     ]}
+    {"ID": "4", "nombre": "Martina", "apellido": "Quintana", "especialidad": "Nutricionista", 
+     "disponibilidad": [
+        {"dia": "Lunes", "horarios": [{"hora": 10, "reservado": False}, {"hora": 11, "reservado": False}, 
+                                      {"hora": 12, "reservado": False}, {"hora": 13, "reservado": False}]},
+        {"dia": "Miercoles", "horarios": [{"hora": 10, "reservado": False}, {"hora": 11, "reservado": False}, 
+                                          {"hora": 12, "reservado": False}]}
+     ]},
+    
+    # Horarios asignados para Bisbal Jorge (Pediatra)
+    {"ID": "5", "nombre": "Jorge", "apellido": "Bisbal", "especialidad": "Pediatra", 
+     "disponibilidad": [
+        {"dia": "Martes", "horarios": [{"hora": 9, "reservado": False}, {"hora": 10, "reservado": False}, 
+                                       {"hora": 11, "reservado": False}, {"hora": 12, "reservado": False}]},
+        {"dia": "Jueves", "horarios": [{"hora": 14, "reservado": False}, {"hora": 15, "reservado": False}, 
+                                       {"hora": 16, "reservado": False}, {"hora": 17, "reservado": False}]}
+     ]},
+    
+    # Horarios asignados para Perez Laura (Oftalmologo)
+    {"ID": "6", "nombre": "Laura", "apellido": "Perez", "especialidad": "Oftalmologo", 
+     "disponibilidad": [
+        {"dia": "Viernes", "horarios": [{"hora": 9, "reservado": False}, {"hora": 10, "reservado": False}, 
+                                        {"hora": 11, "reservado": False}, {"hora": 12, "reservado": False}, 
+                                        {"hora": 13, "reservado": False}]}
+     ]}
+]
 
-turnosMatriz = [[
-    "id", " id paciente", "id medico", "horario", "fecha", "observacion"
-]]
+"""Horarios asignados:
+Carlos Maslaton (Oftalmologo):
+    Lunes: 13:00 - 17:00
+    Miércoles: 13:00 - 17:00
+    Jueves: 13:00 - 17:00
+
+Juan Rodriguez (Oftalmologo):
+    Martes: 13:00 - 17:00
+    Viernes: 13:00 - 17:00
+    Sábado: 13:00 - 17:00
+
+Carla Gomez (Pediatra):
+    Lunes: 10:00 - 13:00
+    Martes: 14:00 - 18:00
+    Jueves: 9:00 - 13:00
+
+Martina Quintana (Nutricionista):
+    Lunes: 10:00 - 13:00
+    Miércoles: 10:00 - 12:00
+
+Jorge Bisbal (Pediatra):
+    Martes: 9:00 - 12:00
+    Jueves: 14:00 - 17:00
+
+Laura Perez (Oftalmologo):
+    Viernes: 9:00 - 13:00"""
+
 """
 ingresar profesional, ingresar paciente, mostrar dias disponibles, mostrar horarios disponibles, seleccionar uno, almacenar en pacientes. 
 
