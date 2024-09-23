@@ -86,8 +86,7 @@ profesionales = [
         {"dia": "Miercoles", "horarios": [{"hora": 13, "reservado": False}, {"hora": 14, "reservado": False}, 
                                           {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}]},
         {"dia": "Jueves", "horarios": [{"hora": 13, "reservado": False}, {"hora": 14, "reservado": False}, 
-                                       {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}]}
-     ]},
+                                       {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}]}]},
     
     {"ID": "2", "nombre": "Juan", "apellido": "Rodriguez", "especialidad": "Oftalmologo", 
      "disponibilidad": [
@@ -99,9 +98,7 @@ profesionales = [
                                         {"hora": 17, "reservado": False}]},
         {"dia": "Sábado", "horarios": [{"hora": 13, "reservado": False}, {"hora": 14, "reservado": False}, 
                                         {"hora": 15, "reservado": False}, {"hora": 16, "reservado": False}, 
-                                        {"hora": 17, "reservado": False}]}
-
-     ]},
+                                        {"hora": 17, "reservado": False}]}]},
     
     {"ID": "3", "nombre": "Carla", "apellido": "Gomez", "especialidad": "Pediatra", 
      "disponibilidad": [
@@ -112,32 +109,27 @@ profesionales = [
                                        {"hora": 18, "reservado": False}]},
         {"dia": "Jueves", "horarios": [{"hora": 9, "reservado": False}, {"hora": 10, "reservado": False}, 
                                        {"hora": 11, "reservado": False}, {"hora": 12, "reservado": False}, 
-                                       {"hora": 13, "reservado": False}]}
-     ]}
+                                       {"hora": 13, "reservado": False}]}]},
+
     {"ID": "4", "nombre": "Martina", "apellido": "Quintana", "especialidad": "Nutricionista", 
      "disponibilidad": [
         {"dia": "Lunes", "horarios": [{"hora": 10, "reservado": False}, {"hora": 11, "reservado": False}, 
                                       {"hora": 12, "reservado": False}, {"hora": 13, "reservado": False}]},
         {"dia": "Miercoles", "horarios": [{"hora": 10, "reservado": False}, {"hora": 11, "reservado": False}, 
-                                          {"hora": 12, "reservado": False}]}
-     ]},
+                                          {"hora": 12, "reservado": False}]}]},
     
-    # Horarios asignados para Bisbal Jorge (Pediatra)
     {"ID": "5", "nombre": "Jorge", "apellido": "Bisbal", "especialidad": "Pediatra", 
      "disponibilidad": [
         {"dia": "Martes", "horarios": [{"hora": 9, "reservado": False}, {"hora": 10, "reservado": False}, 
                                        {"hora": 11, "reservado": False}, {"hora": 12, "reservado": False}]},
         {"dia": "Jueves", "horarios": [{"hora": 14, "reservado": False}, {"hora": 15, "reservado": False}, 
-                                       {"hora": 16, "reservado": False}, {"hora": 17, "reservado": False}]}
-     ]},
-    
-    # Horarios asignados para Perez Laura (Oftalmologo)
+                                       {"hora": 16, "reservado": False}, {"hora": 17, "reservado": False}]}]},
+
     {"ID": "6", "nombre": "Laura", "apellido": "Perez", "especialidad": "Oftalmologo", 
      "disponibilidad": [
         {"dia": "Viernes", "horarios": [{"hora": 9, "reservado": False}, {"hora": 10, "reservado": False}, 
                                         {"hora": 11, "reservado": False}, {"hora": 12, "reservado": False}, 
-                                        {"hora": 13, "reservado": False}]}
-     ]}
+                                        {"hora": 13, "reservado": False}]}]}
 ]
 
 """Horarios asignados:
