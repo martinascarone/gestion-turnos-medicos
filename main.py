@@ -1,63 +1,50 @@
 import random
 
-
-def generarListaEspecialidades(matriz):
+def generarListaEspecialidades(lista):
     '''
-    se ingresa la matirz con los datos de los profesionales, sale listado de especialidades sin duplicados
+    ingresa lista de diccionarios con datos de profesionales, sale listado de especialidades sin duplicados
     '''
     listaEspecialidades = []
-    for i in range(1, len(matriz)):
-        especialidad = matriz[i][3]
+    for profesional in lista:
+        especialidad = profesional["especialidad"]
         if especialidad not in listaEspecialidades:
             listaEspecialidades.append(especialidad)
-    print(f"{listaEspecialidades}")
     return listaEspecialidades
 
 
-def imprimirEspecialidades(especialidades):
-    print(f"llegaron: {especialidades}")
+def imprimirEspecialidades(lista):
+    especialidades = generarListaEspecialidades(lista)
     indice = 0
     print("Hola! ¿Qué especialidad estás buscando?")
     while indice < len(especialidades):
         print(indice + 1, ")", especialidades[indice])
         indice += 1
     print("-1) Finalizar")
+    return especialidades
 
 
-def ingresarEspecialidad(especialidades):
-    seleccion = (int(input("Ingrese el número de especialidad: "))) - 1
-    if seleccion == -2:
-        print("Finalizando...")
-        return None
-    if seleccion >= 0 and seleccion < len(especialidades):
-        return especialidades[seleccion]
-    else:
-        print("Opción inválida")
-        return ingresarEspecialidad(especialidades)
-
-
-def mostrarProfesionales(matriz, especialidadSeleccionada, horarios):
+def generarListaProfesionales(lista, especialidadBuscada):
     """
-    mostrar profesionales disponibles de la espeialidad seleccionada
+    mostrar profesionales disponibles de la especialidad seleccionada
     """
-    # Filtramos los profesionales que coincidan con la especialidad seleccionada
-    print(f"Especialidad seleccionada: {especialidadSeleccionada}")
-    profesionales = []
-    for i in range(1, len(matriz)):
-        if matriz[i][3] == especialidadSeleccionada:
-            profesionales.append(matriz[i][1] + " " + matriz[i][2])
+    listaProfesionales = []
+    for profesional in lista:
+        if especialidadBuscada == profesional["especialidad"]:
+            listaProfesionales.append(profesional)
+    return listaProfesionales
+
+
+def imprimirProfesionales(lista, especialidadBuscada):
+    profesionales = generarListaProfesionales(lista, especialidadBuscada)
     indice = 0
-    print("Profesionales disponibles de la especialidad seleccionada:")
     while indice < len(profesionales):
-        print(indice + 1, ")", profesionales[indice])
+        print(indice + 1, ")", profesionales[indice]["apellido"])
         indice += 1
+    print("-1) Finalizar")
 
-
+"""
 def mostrarDisponibilidad(matriz):
-    """
-    mostrar dias disponibles
-    mostrar horarios disponibles
-    """
+    #mostrar dias disponibles     mostrar horarios disponibles
 
 
 def solicitarDatos(matriz):
@@ -75,9 +62,9 @@ def mostrarTurnoMedico(matriz)
     print("------------------------")
     print(f"Hola!{nombre},{apellido}")
 
+"""
 
-
-#Creamos una lista de diccionarios para poder acceder a los daos de los profecionales de forma sencilla
+#Creamos una matriz de diccionarios para poder acceder a los daos de los profecionales de forma sencilla
 profesionales = [
     {"ID": "1", "nombre": "Carlos", "apellido": "Maslaton", "especialidad": "Oftalmologo", 
      "disponibilidad": [
@@ -171,14 +158,11 @@ decir cual es el trno libre mas proximo"""
 
 #generarListaEspecialidades(matriz)
 #imprimirDatos(matriz)
-especialidades = generarListaEspecialidades(matrizProfesionales)
-imprimirEspecialidades(especialidades)
-especialidad = ingresarEspecialidad(especialidades)
 
-if especialidad:
-    mostrarProfesionales(matrizProfesionales, especialidad, matrizHorarios)
-    profesional = input("Ingrese el número del profesional: ")
-    mostrarDisponibilidad(matrizHorarios, profesional)
-    solicitardatos(pacienteMatriz)
-else:
-    print("No se selecciono ninguna especialidad")
+
+# Inicio Programa
+especialidades = imprimirEspecialidades(profesionales)
+especialidadSeleccionada = int(input("Ingrese el número de la especialidad que le interesa: ")) - 1
+especialidadBuscada = especialidades[especialidadSeleccionada]
+imprimirProfesionales(profesionales, especialidadBuscada)
+profesionalSeleccionado = int(input("Ingrese el número de la especialidad que le interesa: ")) - 1
