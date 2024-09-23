@@ -60,7 +60,7 @@ def mostrarDisponibilidad(matriz):
     """
 
 
-def solicitardatos(matriz):
+def solicitarDatos(matriz):
     nombre = input("Ingrese su nombre: ")
     apellido = input("Ingrese su apellido: ")
     dni = int(input("Ingrese su DNI: "))
@@ -69,6 +69,12 @@ def solicitardatos(matriz):
     pacienteMatriz.append(["id", "nombre", "apellido", "dni"])
     print(pacienteMatriz)
     return pacienteMatriz
+
+def mostrarTurnoMedico(matriz)
+    datosPaciente = solicitarDatos(matriz)
+    print("------------------------")
+    print(f"Hola!{nombre},{apellido}")
+
 
 
 #ingresar especialidad
