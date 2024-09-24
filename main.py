@@ -208,21 +208,19 @@ def seleccionarTurno(idTurno, dia, hora, paciente):
     print("\n-------------------------------------------------" )
     print(f"Turno reservado para el día {dia} a las {hora}:00 hs")
     print("-------------------------------------------------\n" )
-    
-'''
- - Funcion original para generar la lista de turnos sin duplicados -
+
+
+
 def generarListaEspecialidades(lista):
-    #ingresa lista de diccionarios con datos de profesionales, sale listado de especialidades sin duplicados
+#ingresa lista de diccionarios con datos de profesionales, sale listado de especialidades sin duplicados
     
     listaEspecialidades = []
     for profesional in lista:
         especialidad = profesional["especialidad"]
         if especialidad not in listaEspecialidades:
             listaEspecialidades.append(especialidad)
-    return listaEspecialidades'''
+    return listaEspecialidades
 
-#Funcion lambda para generar la lista de turnos sin duplicados
-generarListaEspecialidades = lambda lista: list(set(map(lambda p: p["especialidad"], lista)))
 
 def imprimirEspecialidades(lista):
     especialidades = generarListaEspecialidades(lista)
