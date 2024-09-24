@@ -47,17 +47,3 @@ Al ejecutar el programa, el flujo general es el siguiente:
 4. El usuario selecciona un profesional.
 5. Se muestran los horarios disponibles del profesional seleccionado.
 6. El usuario elige un turno y se registra la reserva.
-
-## Mejoras Futuras
-
-- **Mejorar la función de comprobación de turnos ocupados.**
-- **Agregar validación de datos ingresados por el usuario.**
-- **Incorporar una interfaz gráfica para facilitar la interacción.**
-
-## Cómo Ejecutar el Proyecto
-
-1. Clonar el repositorio o copiar el código fuente.
-2. Asegúrese de tener Python instalado.
-3. Ejecutar el script desde la terminal:
-   ```bash
-   python nombre_del_script.py

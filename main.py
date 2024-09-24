@@ -1,6 +1,6 @@
 import random
 
-profesionales =[
+profesionales = [
     {
         "id": "1",
         "nombre": "Carlos",
@@ -150,72 +150,64 @@ disponibilidades = [
         "dia": "Viernes",
         "horarioEntrada": 10,
         "horarioSalida": 13,
-    },
-    {
-        "id": "15",
-        "idMedico": "8",
-        "dia": "Sábado",
-        "horarioEntrada": 10,
-        "horarioSalida": 12,
     }
 ]
 
-turnos = [
-    {'id': '1', 'idPaciente': 1, 'idMedico': 2, 'dia': 'Martes', 'hora': 13}
-    # {
-    #     "id": "1",
-    #     "idPaciente": "1",
-    #     "idMedico": "1",
-    #     "dia": "Lunes",
-    #     "hora": "13:00",
-    # }
-]
+turnos = []
 
-pacientes = [
-    # {
-    #     "id": "1",
-    #     "nombre": "Juan",
-    #     "apellido": "Perez",
-    #     "dni": "12345678",
-    # }
-]
+pacientes = []
 
 def isTurnoOcupado(dia, hora, idMedico):
-    # hay que mejorarla
     for turno in turnos:
-        if turno["dia"] == dia and turno["hora"] == hora and turno["idMedico"] == str(idMedico):
+        if turno["dia"] == dia and turno["hora"] == hora and int(turno["idMedico"]) == int(idMedico):
             return True
     return False
 
 def imprimirTurnosDisponibles(profesional):
     contador = 0
-    disponibles = []
+    opciones = []
     for turno in disponibilidades:
         if turno["idMedico"] == str(profesional):
             contadorHoras = turno["horarioSalida"] - turno["horarioEntrada"]
             for hora in range(contadorHoras):
+                dia = turno["dia"]
                 hora_actual = turno["horarioEntrada"] + hora
-                if(isTurnoOcupado(turno["dia"], hora_actual, profesional)):
-                    print(contador + 1, ")", turno["dia"], hora_actual, "hs OCUPADO")
+                ocupado = isTurnoOcupado(dia, hora_actual, profesional)
+                opciones.append({
+                    "dia": dia,
+                    "hora": hora_actual,
+                    "ocupado": ocupado
+                })
+                if ocupado:
+                    print(contador + 1, ")", dia, hora_actual, "hs OCUPADO")
                 else:
-                    disponibles.append((turno["dia"], hora_actual))  # Almacena una tupla (día, hora)
-                    print(contador + 1, ")", turno["dia"], hora_actual, "hs")
+                    print(contador + 1, ")", dia, hora_actual, "hs")
                 contador += 1
+    while True:
+        turnoSeleccionado = input("Ingrese el número del turno que desea seleccionar: ")
+        if turnoSeleccionado.isdigit():
+            turnoSeleccionado = int(turnoSeleccionado) - 1
+            if turnoSeleccionado < 0 or turnoSeleccionado >= len(opciones):
+                print("Selección inválida. Por favor, seleccione un número válido.")
+                continue
+            if opciones[turnoSeleccionado]["ocupado"]:
+                print("El turno seleccionado está ocupado. Por favor, seleccione otro turno.")
+            else:
+                return opciones[turnoSeleccionado]["dia"], opciones[turnoSeleccionado]["hora"]
+        else:
+            print("Debe ingresar un número válido.")
 
-    turnoSeleccionado = int(input("Ingrese el número del turno que desea seleccionar: ")) - 1
-    return disponibles[turnoSeleccionado]  # Retorna una tupla (día, hora)
-
-            
-def seleccionarTurno(idTurno, dia, hora,paciente):
+def seleccionarTurno(idTurno, dia, hora, paciente):
     turnos.append(
         {
             "id": str(len(turnos) + 1),
-            "idPaciente": paciente,
-            "idMedico": idTurno,
+            "idPaciente": int(paciente),
+            "idMedico": int(idTurno),
             "dia": dia,
             "hora": hora
-        }
-    )
+        })
+    print(f"Turno reservado para el día {dia} a las {hora}:00 hs")
+
 '''
  - Funcion original para generar la lista de turnos sin duplicados -
 def generarListaEspecialidades(lista):
@@ -230,7 +222,6 @@ def generarListaEspecialidades(lista):
 
 #Funcion lambda para generar la lista de turnos sin duplicados
 generarListaEspecialidades = lambda lista: list(set(map(lambda p: p["especialidad"], lista)))
-
 
 def imprimirEspecialidades(lista):
     especialidades = generarListaEspecialidades(lista)
@@ -255,10 +246,9 @@ def generarListaProfesionales(lista, especialidadBuscada):
             listaProfesionales.append(profesional)
     return listaProfesionales
 '''
-#funcion lamda para generar lista de profesionales asosciados a la especialidad seleccionada
+
+#funcion lambda para generar lista de profesionales asosciados a la especialidad seleccionada
 generarListaProfesionales = lambda lista, especialidadBuscada: list(filter(lambda p: p["especialidad"] == especialidadBuscada, lista))
-
-
 
 def imprimirProfesionales(lista, especialidadBuscada):
     profesionales = generarListaProfesionales(lista, especialidadBuscada)
@@ -269,82 +259,87 @@ def imprimirProfesionales(lista, especialidadBuscada):
     print("Seleccione el Profesional que desea consultar")
     print("-1) Finalizar")
 
-
-# def mostrarTurnoMedico(matriz):
-#     datosPaciente = solicitarDatos(matriz)
-#     print("------------------------")
-#     print(f"Hola!{nombre},{apellido}")
-
-#Creamos una matriz de diccionarios para poder acceder a los daos de los profecionales de forma sencilla
-
-
-"""Horarios asignados:
-Carlos Maslaton (Oftalmologo):
-    Lunes: 13:00 - 17:00
-    Miércoles: 13:00 - 17:00
-    Jueves: 13:00 - 17:00
-
-Juan Rodriguez (Oftalmologo):
-    Martes: 13:00 - 17:00
-    Viernes: 13:00 - 17:00
-    Sábado: 13:00 - 17:00
-
-Carla Gomez (Pediatra):
-    Lunes: 10:00 - 13:00
-    Martes: 14:00 - 18:00
-    Jueves: 9:00 - 13:00
-
-Martina Quintana (Nutricionista):
-    Lunes: 10:00 - 13:00
-    Miércoles: 10:00 - 12:00
-
-Jorge Bisbal (Pediatra):
-    Martes: 9:00 - 12:00
-    Jueves: 14:00 - 17:00
-
-Laura Perez (Oftalmologo):
-    Viernes: 9:00 - 13:00"""
-
-"""
-ingresar profesional, ingresar paciente, mostrar dias disponibles, mostrar horarios disponibles, seleccionar uno, almacenar en pacientes. 
-
-"""
-#Inicio Peograma
-"""crear funcion que muestre las fechas disponibles de cada medico!!!!!!!!
-decir cual es el trno libre mas proximo"""
-
-#pacienteMatriz = [nombre, apellido, dni, id]
-
-#generarListaEspecialidades(matriz)
-#imprimirDatos(matriz)
-
-
 def solicitarDatos():
-    nombre = input("Ingrese su nombre: ")
-    apellido = input("Ingrese su apellido: ")
-    dni = int(input("Ingrese su DNI: "))
-    dni = int(dni)
-    id = len(pacientes) + 1
-    pacientes.append([id, nombre, apellido, dni])
-    return id
+    while True:
+        nombre = input("Ingrese su nombre: ")
+        if not nombre.isalpha():
+            print("El nombre debe contener solo letras.")
+            continue
+
+        apellido = input("Ingrese su apellido: ")
+        if not apellido.isalpha():
+            print("El apellido debe contener solo letras.")
+            continue
+
+        dni = input("Ingrese su DNI: ")
+        if not dni.isdigit():
+            print("El DNI debe contener solo números.")
+            continue
+
+        id = len(pacientes) + 1
+        pacientes.append([id, nombre, apellido, dni])
+        return id
+
+
+def seleccionarEspecialidad():
+    while True:
+        especialidadSeleccionada = input("Ingrese el número de la especialidad que le interesa (o -1 para salir): ")
+        if especialidadSeleccionada.isdigit() or (especialidadSeleccionada == "-1"):
+            return int(especialidadSeleccionada) - 1
+        else:
+            print("Selección inválida. Por favor ingrese un número válido.")
+
+def seleccionarProfesional(profesionales, especialidadBuscada):
+    imprimirProfesionales(profesionales, especialidadBuscada)
+    
+    while True:
+        profesionalSeleccionado = input("Ingrese el número del profesional que le interesa: ")
+        if profesionalSeleccionado.isdigit():
+            return int(profesionalSeleccionado) - 1
+        else:
+            print("Selección inválida. Por favor ingrese un número válido.")
 
 # Inicio Programa
 especialidadSeleccionada = 0 
 
 while especialidadSeleccionada != -1:
     especialidades = imprimirEspecialidades(profesionales)
-    especialidadSeleccionada = int(input("Ingrese el número de la especialidad que le interesa (o -1 para salir): ")) - 1
     
-    if especialidadSeleccionada == -2:  # Cuando el usuario selecciona -1
-        print("Finalizó Reserva.")
+    while True:
+        try:
+            especialidadSeleccionada = int(input("Ingrese el número de la especialidad que le interesa (o -1 para salir): ")) - 1
+            
+            if especialidadSeleccionada == -2:  # Para corregir índice
+                print("Finalizó Reserva.")
+                break
+                
+            if especialidadSeleccionada < -1 or especialidadSeleccionada >= len(especialidades):
+                print("Selección inválida. Por favor, seleccione un número válido.")
+                continue  # Volver a mostrar las especialidades
+            break  # Salir del bucle si la selección es válida
+            
+        except ValueError:
+            print("Error: Debe ingresar un número válido.")
+
+    if especialidadSeleccionada == -2:  # Para salir del ciclo
         break
-    
+
     especialidadBuscada = especialidades[especialidadSeleccionada]
     imprimirProfesionales(profesionales, especialidadBuscada)
     
-    profesionalSeleccionado = int(input("Ingrese el número del profesional que le interesa: ")) - 1
-    dia, hora = imprimirTurnosDisponibles(profesionalSeleccionado + 1)
+    while True:
+        try:
+            profesionalSeleccionado = int(input("Ingrese el número del profesional que le interesa: ")) - 1
+            
+            if profesionalSeleccionado < 0 or profesionalSeleccionado >= len(profesionales):
+                print("Selección inválida. Por favor, seleccione un número válido.")
+                continue  # Volver a mostrar los profesionales
+            break  # Salir del bucle si la selección es válida
+            
+        except ValueError:
+            print("Error: Debe ingresar un número válido.")
 
+    dia, hora = imprimirTurnosDisponibles(profesionalSeleccionado + 1)
 
     seleccionarTurno(
         profesionalSeleccionado + 1,
@@ -353,6 +348,4 @@ while especialidadSeleccionada != -1:
         solicitarDatos()
     )
 
-    print("PROFESIONALES", profesionales)
-    print("TURNOS", turnos)
-    print("PACIENTES", pacientes)
+
