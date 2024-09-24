@@ -205,8 +205,10 @@ def seleccionarTurno(idTurno, dia, hora, paciente):
             "dia": dia,
             "hora": hora
         })
+    print("\n-------------------------------------------------" )
     print(f"Turno reservado para el día {dia} a las {hora}:00 hs")
-
+    print("-------------------------------------------------\n" )
+    
 '''
  - Funcion original para generar la lista de turnos sin duplicados -
 def generarListaEspecialidades(lista):
