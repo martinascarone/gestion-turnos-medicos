@@ -189,7 +189,7 @@ def isTurnoOcupado(dia, hora, idMedico):
 
 def imprimirTurnosDisponibles(profesional):
     contador = 0
-    
+    disponibles = []
     for turno in disponibilidades:
         if turno["idMedico"] == str(profesional):
             contadorHoras = turno["horarioSalida"] - turno["horarioEntrada"]
@@ -197,8 +197,14 @@ def imprimirTurnosDisponibles(profesional):
                 if(isTurnoOcupado(turno["dia"], turno["horarioEntrada"] + hora, profesional)):
                     print(contador + 1, ")", turno["dia"], turno["horarioEntrada"] + hora, "hs OCUPADO")
                 else:
+                    disponibles.append({
+                        turno["dia"],
+                        turno["horarioEntrada"] + hora
+                    })
                     print(contador + 1, ")", turno["dia"], turno["horarioEntrada"] + hora, "hs")
                 contador += 1
+    turnoSeleccionado = (int(input("Ingrese el número del turno que desea seleccionar: ")) )-1
+    return disponibles[turnoSeleccionado]
             
 def seleccionarTurno(idTurno, dia, hora,paciente):
     turnos.append(
@@ -314,23 +320,29 @@ def solicitarDatos():
     return id
 
 # Inicio Programa
-especialidades = imprimirEspecialidades(profesionales)
-especialidadSeleccionada = int(input("Ingrese el número de la especialidad que le interesa: ")) - 1
-especialidadBuscada = especialidades[especialidadSeleccionada]
-imprimirProfesionales(profesionales, especialidadBuscada)
-profesionalSeleccionado = int(input("Ingrese el número de la especialidad que le interesa: ")) - 1
-print("El profesional seleccionado es:", profesionalSeleccionado)
-imprimirTurnosDisponibles(profesionalSeleccionado+1)
+especialidadSeleccionada = 0 
 
-turnoSeleccionado = int(input("Ingrese el número del turno que desea seleccionar: "))
+while especialidadSeleccionada != -1:
+    especialidades = imprimirEspecialidades(profesionales)
+    especialidadSeleccionada = int(input("Ingrese el número de la especialidad que le interesa (o -1 para salir): ")) - 1
+    
+    if especialidadSeleccionada == -2:  # Cuando el usuario selecciona -1
+        print("Finalizó Reserva.")
+        break
+    
+    especialidadBuscada = especialidades[especialidadSeleccionada]
+    imprimirProfesionales(profesionales, especialidadBuscada)
+    
+    profesionalSeleccionado = int(input("Ingrese el número del profesional que le interesa: ")) - 1
+    dia, hora = imprimirTurnosDisponibles(profesionalSeleccionado + 1)
 
-seleccionarTurno(
-    profesionalSeleccionado+1,
-    disponibilidades[turnoSeleccionado-1]["dia"] ,
-    disponibilidades[turnoSeleccionado-1]["horarioEntrada"],
-    solicitarDatos()
-)
+    seleccionarTurno(
+        profesionalSeleccionado + 1,
+        dia,
+        hora,
+        solicitarDatos()
+    )
 
-print("PROFESIONALES", profesionales)
-print("TURNOS", turnos)
-print("PACIENTES", pacientes)
+    print("PROFESIONALES", profesionales)
+    print("TURNOS", turnos)
+    print("PACIENTES", pacientes)
