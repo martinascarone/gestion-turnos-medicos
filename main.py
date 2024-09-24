@@ -1,5 +1,3 @@
-import random
-
 profesionales = [
     {
         "id": "1",
@@ -196,6 +194,7 @@ def imprimirTurnosDisponibles(profesional):
                 return opciones[turnoSeleccionado]["dia"], opciones[turnoSeleccionado]["hora"]
         else:
             print("Debe ingresar un número válido.")
+
 
 def seleccionarTurno(idTurno, dia, hora, paciente):
     turnos.append(
