@@ -309,19 +309,19 @@ while especialidadSeleccionada != -1:
         try:
             especialidadSeleccionada = int(input("Ingrese el número de la especialidad que le interesa (o -1 para salir): ")) - 1
             
-            if especialidadSeleccionada == -2:  # Para corregir índice
+            if especialidadSeleccionada == -2:  # arreglamos indice
                 print("Finalizó Reserva.")
                 break
                 
             if especialidadSeleccionada < -1 or especialidadSeleccionada >= len(especialidades):
                 print("Selección inválida. Por favor, seleccione un número válido.")
-                continue  # Volver a mostrar las especialidades
-            break  # Salir del bucle si la selección es válida
+                continue
+            break  
             
         except ValueError:
             print("Error: Debe ingresar un número válido.")
 
-    if especialidadSeleccionada == -2:  # Para salir del ciclo
+    if especialidadSeleccionada == -2:  # arreglamos indice
         break
 
     especialidadBuscada = especialidades[especialidadSeleccionada]
@@ -333,8 +333,8 @@ while especialidadSeleccionada != -1:
             
             if profesionalSeleccionado < 0 or profesionalSeleccionado >= len(profesionales):
                 print("Selección inválida. Por favor, seleccione un número válido.")
-                continue  # Volver a mostrar los profesionales
-            break  # Salir del bucle si la selección es válida
+                continue  
+            break 
             
         except ValueError:
             print("Error: Debe ingresar un número válido.")
