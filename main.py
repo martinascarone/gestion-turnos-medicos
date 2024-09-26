@@ -261,44 +261,24 @@ def imprimirProfesionales(lista, especialidadBuscada):
 
 def solicitarDatos():
 #solicita los datos del paciente y valida entradas
-    while True:
+    nombre = input("Ingrese su nombre: ")
+    while not nombre.isalpha():
+        print("El nombre debe contener solo letras.")
         nombre = input("Ingrese su nombre: ")
-        if not nombre.isalpha():
-            print("El nombre debe contener solo letras.")
-            continue
-
+        
+    apellido = input("Ingrese su apellido: ")
+    while not apellido.isalpha():
+        print("El apellido debe contener solo letras.")
         apellido = input("Ingrese su apellido: ")
-        if not apellido.isalpha():
-            print("El apellido debe contener solo letras.")
-            continue
-
+        
+    dni = input("Ingrese su DNI: ")
+    while not dni.isdigit():
+        print("El DNI debe contener solo números.")
         dni = input("Ingrese su DNI: ")
-        if not dni.isdigit():
-            print("El DNI debe contener solo números.")
-            continue
-
-        id = len(pacientes) + 1
-        pacientes.append([id, nombre, apellido, dni])
-        return id
-
-
-def seleccionarEspecialidad():
-    while True:
-        especialidadSeleccionada = input("Ingrese el número de la especialidad que le interesa (o -1 para salir): ")
-        if especialidadSeleccionada.isdigit() or (especialidadSeleccionada == "-1"):
-            return int(especialidadSeleccionada) - 1
-        else:
-            print("Selección inválida. Por favor ingrese un número válido.")
-
-def seleccionarProfesional(profesionales, especialidadBuscada):
-    imprimirProfesionales(profesionales, especialidadBuscada)
-    
-    while True:
-        profesionalSeleccionado = input("Ingrese el número del profesional que le interesa: ")
-        if profesionalSeleccionado.isdigit():
-            return int(profesionalSeleccionado) - 1
-        else:
-            print("Selección inválida. Por favor ingrese un número válido.")
+        
+    id = len(pacientes) + 1
+    pacientes.append([id, nombre, apellido, dni])
+    return id
 
 # Inicio Programa
 especialidadSeleccionada = 0 
@@ -348,5 +328,3 @@ while especialidadSeleccionada != -1:
         hora,
         solicitarDatos()
     )
-
-
