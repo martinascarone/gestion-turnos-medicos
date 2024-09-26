@@ -213,7 +213,7 @@ def seleccionarTurno(idTurno, dia, hora, paciente):
 
 def generarListaEspecialidades(lista):
 #ingresa lista de diccionarios con datos de profesionales, sale listado de especialidades sin duplicados
-    
+#genera lista de especialidades sin duplicados    
     listaEspecialidades = []
     for profesional in lista:
         especialidad = profesional["especialidad"]
@@ -223,6 +223,7 @@ def generarListaEspecialidades(lista):
 
 
 def imprimirEspecialidades(lista):
+#imprime toda las especialidades disponibles
     especialidades = generarListaEspecialidades(lista)
     indice = 0
     print("Hola! ¿Qué especialidad estás buscando?")
@@ -234,7 +235,6 @@ def imprimirEspecialidades(lista):
 
 '''
  - Funcion original para generar lista de profesionales asosiados a la especialidad -
-
 def generarListaProfesionales(lista, especialidadBuscada):
     """
     mostrar profesionales disponibles de la especialidad seleccionada
@@ -250,15 +250,17 @@ def generarListaProfesionales(lista, especialidadBuscada):
 generarListaProfesionales = lambda lista, especialidadBuscada: list(filter(lambda p: p["especialidad"] == especialidadBuscada, lista))
 
 def imprimirProfesionales(lista, especialidadBuscada):
+#mostrar todos los profesionales de la especialidad
     profesionales = generarListaProfesionales(lista, especialidadBuscada)
     indice = 0
     while indice < len(profesionales):
         print(indice + 1, ")", profesionales[indice]["nombre"], profesionales[indice]["apellido"])
         indice += 1
-    print("Seleccione el Profesional que desea consultar")
-    print("-1) Finalizar")
+
+
 
 def solicitarDatos():
+#solicita los datos del paciente y valida entradas
     while True:
         nombre = input("Ingrese su nombre: ")
         if not nombre.isalpha():
