@@ -45,105 +45,90 @@ profesionales = [
 
 disponibilidades = [
     {
-        "id": "1",
         "idMedico": "1",
         "dia": "Lunes",
         "horarioEntrada": 13,
         "horarioSalida": 17,
     },
     {
-        "id": "2",
         "idMedico": "1",
         "dia": "Miércoles",
         "horarioEntrada": 13,
         "horarioSalida": 17,
     },
     {
-        "id": "2",
         "idMedico": "1",
         "dia": "Jueves",
         "horarioEntrada": 13,
         "horarioSalida": 17,
     },
     {
-        "id": "3",
         "idMedico": "2",
         "dia": "Martes",
         "horarioEntrada": 13,
         "horarioSalida": 17,
     },
     {
-        "id": "4",
         "idMedico": "2",
         "dia": "Viernes",
         "horarioEntrada": 13,
         "horarioSalida": 17,
     },
     {
-        "id": "5",
         "idMedico": "2",
         "dia": "Sábado",
         "horarioEntrada": 13,
         "horarioSalida": 17,
     },
     {
-        "id": "6",
         "idMedico": "3",
         "dia": "Lunes",
         "horarioEntrada": 10,
         "horarioSalida": 13,
     },
     {
-        "id": "7",
         "idMedico": "3",
         "dia": "Martes",
         "horarioEntrada": 14,
         "horarioSalida": 18,
     },
     {
-        "id": "8",
         "idMedico": "4",
         "dia": "Jueves",
         "horarioEntrada": 9,
         "horarioSalida": 13,
     },
     {
-        "id": "9",
         "idMedico": "4",
         "dia": "Lunes",
         "horarioEntrada": 10,
         "horarioSalida": 13,
     },
     {
-        "id": "10",
         "idMedico": "4",
         "dia": "Miércoles",
         "horarioEntrada": 10,
         "horarioSalida": 12,
     },
     {
-        "id": "11",
         "idMedico": "5",
         "dia": "Martes",
         "horarioEntrada": 9,
         "horarioSalida": 12,
     },
     {
-        "id": "12",
         "idMedico": "5",
         "dia": "Jueves",
         "horarioEntrada": 14,
         "horarioSalida": 17,
     },
     {
-        "id": "13",
         "idMedico": "6",
         "dia": "Viernes",
         "horarioEntrada": 9,
         "horarioSalida": 13,
     },
     {
-        "id": "14",
         "idMedico": "7",
         "dia": "Viernes",
         "horarioEntrada": 10,
@@ -280,6 +265,8 @@ def solicitarDatos():
     pacientes.append([id, nombre, apellido, dni])
     return id
 
+
+
 # Inicio Programa
 especialidadSeleccionada = 0 
 
@@ -308,11 +295,12 @@ while especialidadSeleccionada != -1:
     especialidadBuscada = especialidades[especialidadSeleccionada]
     imprimirProfesionales(profesionales, especialidadBuscada)
     
+
     while True:
         try:
             profesionalSeleccionado = int(input("Ingrese el número del profesional que le interesa: ")) - 1
             
-            if profesionalSeleccionado < 0 or profesionalSeleccionado >= len(profesionales):
+            if profesionalSeleccionado < 0 or profesionalSeleccionado >= len(especialidades):
                 print("Selección inválida. Por favor, seleccione un número válido.")
                 continue  
             break 
