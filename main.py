@@ -258,7 +258,7 @@ def main():
             apellido = input("Ingrese su apellido: ")
 
         dni = input("Ingrese su DNI: ")
-        while not dni.isdigit() and len(dni)>=6:
+        while not dni.isdigit() or not len(dni)>=6:
             print("El DNI debe contener solo números.")
             dni = input("Ingrese su DNI: ")
 
