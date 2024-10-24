@@ -140,6 +140,13 @@ def main():
     turnos = []
 
     pacientes = []
+    
+    #def modificarTurno():
+    
+    #def eliminarTurno():
+    
+    #def visualizarTurnos():
+    
 
     def isTurnoOcupado(dia, hora, idMedico):
         for turno in turnos:
