@@ -150,6 +150,45 @@ def main():
     def imprimirTurnosDisponibles(profesional):
         contador = 0
         opciones = []
+
+        print("┌" + ("─"*4) + "┬" + ("─"*12) + "┬" + ("─"*10) + "┬" + ("─"*15) + "┐")
+        print("│" + " " + "   " + "│" + " " + "Día" + " " * 8 + "│" + " " + "Horario" + "  " + "│" + " " + "Disponibilidad" +"│")
+        print("├" + "─"*4 + "┼" + "─"*12 + "┼" + "─"*10 + "┼" + "─"*15 + "┤")
+
+        for turno in disponibilidades:
+            if turno["idMedico"] == str(profesional):
+                contadorHoras = turno["horarioSalida"] - turno["horarioEntrada"]
+                for hora in range(contadorHoras):
+                    dia = turno["dia"]
+                    hora_actual = turno["horarioEntrada"] + hora
+                    ocupado = isTurnoOcupado(dia, hora_actual, profesional)
+                    opciones.append({
+                        "dia": dia,
+                        "hora": hora_actual,
+                        "ocupado": ocupado
+                    })
+
+                    disponibilidad_texto = "OCUPADO" if ocupado else "DISPONIBLE"
+                    print(f"│ {contador + 1:<3}│ {dia:<10} │ {hora_actual:<8} │ {disponibilidad_texto:<13} │")
+                    contador += 1
+
+        print("└" + "─"*4 + "┴" + "─"*12 + "┴" + "─"*10 + "┴" + "─"*15 + "┘")
+
+        while True:
+            turnoSeleccionado = input("Ingrese el número del turno que desea seleccionar: ")
+            if turnoSeleccionado.isdigit():
+                turnoSeleccionado = int(turnoSeleccionado) - 1
+                if turnoSeleccionado < 0 or turnoSeleccionado >= len(opciones):
+                    print("Selección inválida. Por favor, seleccione un número válido.")
+                    continue
+                if opciones[turnoSeleccionado]["ocupado"]:
+                    print("El turno seleccionado está ocupado. Por favor, seleccione otro turno.")
+                else:
+                    return opciones[turnoSeleccionado]["dia"], opciones[turnoSeleccionado]["hora"]
+            else:
+                print("Debe ingresar un número válido.")
+        contador = 0
+        opciones = []
         for turno in disponibilidades:
             if turno["idMedico"] == str(profesional):
                 contadorHoras = turno["horarioSalida"] - turno["horarioEntrada"]
@@ -163,6 +202,7 @@ def main():
                         "ocupado": ocupado
                     })
                     if ocupado:
+                        print("┌────────────────────────────────────────────────┐\n" + "│")
                         print(contador + 1, ")", dia, hora_actual, "hs OCUPADO")
                     else:
                         print(contador + 1, ")", dia, hora_actual, "hs")
