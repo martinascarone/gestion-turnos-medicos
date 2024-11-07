@@ -1,4 +1,21 @@
 def main():
+    def leer_disponibilidades():
+        ruta_archivo = "csv/disponibilidad.csv"
+        with open(ruta_archivo, 'r', encoding='utf-8') as archivo: #asignamos el archivo abierto a la variable archivo
+            lineas = archivo.readlines()
+            
+        encabezados = lineas[0].strip().split(',') # seleccionamos la primera linea de la lista (encabezados), split dividie la lista usando, como separador
+        datos = []
+        
+        for linea in lineas[1:]: # usamos slicing para obtener un subconjunto de lineas iniciando desde el i 1
+            valores = linea.strip().split(',')
+            registro = {encabezados[i]: valores[i] for i in range (len(encabezados))}
+            datos.append(registro)
+        print(datos)
+        return datos  
+        
+    disponibilidades = leer_disponibilidades()
+    
     profesionales = [
         {
             "id": "1",
@@ -44,98 +61,7 @@ def main():
         }
     ]
 
-    disponibilidades = [
-        {
-            "idMedico": "1",
-            "dia": "Lunes",
-            "horarioEntrada": 13,
-            "horarioSalida": 17,
-        },
-        {
-            "idMedico": "1",
-            "dia": "Miércoles",
-            "horarioEntrada": 13,
-            "horarioSalida": 17,
-        },
-        {
-            "idMedico": "1",
-            "dia": "Jueves",
-            "horarioEntrada": 13,
-            "horarioSalida": 17,
-        },
-        {
-            "idMedico": "2",
-            "dia": "Martes",
-            "horarioEntrada": 13,
-            "horarioSalida": 17,
-        },
-        {
-            "idMedico": "2",
-            "dia": "Viernes",
-            "horarioEntrada": 13,
-            "horarioSalida": 17,
-        },
-        {
-            "idMedico": "2",
-            "dia": "Sábado",
-            "horarioEntrada": 13,
-            "horarioSalida": 17,
-        },
-        {
-            "idMedico": "3",
-            "dia": "Lunes",
-            "horarioEntrada": 10,
-            "horarioSalida": 13,
-        },
-        {
-            "idMedico": "3",
-            "dia": "Martes",
-            "horarioEntrada": 14,
-            "horarioSalida": 18,
-        },
-        {
-            "idMedico": "4",
-            "dia": "Jueves",
-            "horarioEntrada": 9,
-            "horarioSalida": 13,
-        },
-        {
-            "idMedico": "4",
-            "dia": "Lunes",
-            "horarioEntrada": 10,
-            "horarioSalida": 13,
-        },
-        {
-            "idMedico": "4",
-            "dia": "Miércoles",
-            "horarioEntrada": 10,
-            "horarioSalida": 12,
-        },
-        {
-            "idMedico": "5",
-            "dia": "Martes",
-            "horarioEntrada": 9,
-            "horarioSalida": 12,
-        },
-        {
-            "idMedico": "5",
-            "dia": "Jueves",
-            "horarioEntrada": 14,
-            "horarioSalida": 17,
-        },
-        {
-            "idMedico": "6",
-            "dia": "Viernes",
-            "horarioEntrada": 9,
-            "horarioSalida": 13,
-        },
-        {
-            "idMedico": "7",
-            "dia": "Viernes",
-            "horarioEntrada": 10,
-            "horarioSalida": 13,
-        }
-    ]
+    
 
     turnos = []
 
@@ -147,7 +73,7 @@ def main():
     
     #def visualizarTurnos():
     
-
+    
     def isTurnoOcupado(dia, hora, idMedico):
         for turno in turnos:
             if turno["dia"] == dia and turno["hora"] == hora and int(turno["idMedico"]) == int(idMedico):
@@ -164,10 +90,10 @@ def main():
 
         for turno in disponibilidades:
             if turno["idMedico"] == str(profesional):
-                contadorHoras = turno["horarioSalida"] - turno["horarioEntrada"]
+                contadorHoras = int(turno["horarioSalida"]) - int(turno["horarioEntrada"])
                 for hora in range(contadorHoras):
                     dia = turno["dia"]
-                    hora_actual = turno["horarioEntrada"] + hora
+                    hora_actual = int(turno["horarioEntrada"]) + hora
                     ocupado = isTurnoOcupado(dia, hora_actual, profesional)
                     opciones.append({
                         "dia": dia,

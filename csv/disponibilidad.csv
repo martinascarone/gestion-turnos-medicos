@@ -1,0 +1,16 @@
+idMedico,dia,horarioEntrada,horarioSalida
+1,Lunes,13,17
+1,Miércoles,13,17
+1,Jueves,13,17
+2,Martes,13,17
+2,Viernes,13,17
+2,Sábado,13,17
+3,Lunes,10,13
+3,Martes,14,18
+4,Jueves,9,13
+4,Lunes,10,13
+4,Miércoles,10,12
+5,Martes,9,12
+5,Jueves,14,17
+6,Viernes,9,13
+7,Viernes,10,13
