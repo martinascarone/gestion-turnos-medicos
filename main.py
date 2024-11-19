@@ -11,75 +11,169 @@ def main():
             valores = linea.strip().split(',')
             registro = {encabezados[i]: valores[i] for i in range (len(encabezados))}
             datos.append(registro)
-        print(datos)
+        #print("disponib:", datos)
         return datos  
         
-    disponibilidades = leer_disponibilidades()
+    def leer_profesionales():
+        ruta_archivo = "csv/profesionales.csv"
+        with open(ruta_archivo, 'r', encoding='utf-8') as archivo: 
+            lineas = archivo.readlines()
+        
+        encabezadosProf = lineas[0].strip().split(',') 
+        datosProf = []
+        
+        for linea in lineas[1:]: 
+            valores = linea.strip().split(',')
+            registro = {encabezadosProf[i]: valores[i] for i in range (len(encabezadosProf))}
+            datosProf.append(registro)
+        #print("prof:", datosProf)
+        return datosProf  
     
-    profesionales = [
-        {
-            "id": "1",
-            "nombre": "Carlos",
-            "apellido": "Maslaton",
-            "especialidad": "Oftalmologo",
-        },
-        {
-            "id": "2",
-            "nombre": "Juan",
-            "apellido": "Rodriguez",
-            "especialidad": "Oftalmologo",
-        },
-        {
-            "id": "3",
-            "nombre": "Carla",
-            "apellido": "Gomez",
-            "especialidad": "Pediatra",
-        },
-        {
-            "id": "4",
-            "nombre": "Martina",
-            "apellido": "Quintana",
-            "especialidad": "Nutricionista",
-        },
-        {
-            "id": "5",
-            "nombre": "Jorge",
-            "apellido": "Bisbal",
-            "especialidad": "Pediatra",
-        },
-        {
-            "id": "6",
-            "nombre": "Laura",
-            "apellido": "Perez",
-            "especialidad": "Oftalmologo",
-        },
-        {
-            "id": "7",
-            "nombre": "Mariana",
-            "apellido": "Isola",
-            "especialidad": "Nutricionista",
-        }
-    ]
+    def leer_pacientes():
+        ruta_archivo = "csv/pacientes.csv"
+        try: #colocamos un try catch por si el archivo esta vacio
+            with open(ruta_archivo, 'r', encoding='utf-8') as archivo: 
+                lineas = archivo.readlines()
+            # Verificar si el archivo está vacío
+            if not lineas:
+                print("no hay registros almacenados")
+                return []
 
+            encabpacientes = lineas[0].strip().split(',') 
+            pacientes = []
+
+            for linea in lineas[1:]: 
+                valores = linea.strip().split(',')
+                registro = {encabpacientes[i]: valores[i] for i in range (len(encabpacientes))}
+                pacientes.append(registro)
+            print(pacientes)
+            return pacientes
+        except FileNotFoundError:
+            print(f"Error: El archivo {ruta_archivo} no se encontró.")
+            return []
+        except IndexError as e:
+            print(f"Error de índice al procesar el archivo: {e}")
+            return []
+        except Exception as e:
+            print(f"Error inesperado: {e}")
+            return []
     
+    
+    
+    disponibilidades = leer_disponibilidades()
+    profesionales = leer_profesionales()
+    #pacientes = leer_pacientes() aca no se llama
 
     turnos = []
-
-    pacientes = []
-    
-    #def modificarTurno():
     
     #def eliminarTurno():
     
-    #def visualizarTurnos():
+    def solicitarDNI():
+        dni = input("Ingrese su DNI: ")
+        
+        while not dni.isdigit() or not len(dni)>=6:
+            print("El DNI debe contener solo números.")
+            dni = input("Ingrese su DNI: ")
+        return dni
     
+    def modificarTurnos():
+        dni = visualizarTurnos()
+        #ingrese que turno le gustaria modificar
+        #elimna el turno
+        #aca lo mandaria al seleccione especialidad para que se agende el nuevo numero        
+     pass
+        
+        
+    def visualizarTurnos():
+        dni = solicitarDNI()
+        ruta_archivo = "csv/turnos.csv"
+        try:
+            with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
+                encabezados = archivo.readline().strip().split(',')
+                
+                if not encabezados or encabezados == ['']:
+                    print("Archivo vacio")
+                    return
+                
+                for linea in archivo:
+                    valores = linea.strip().split(',')
+                    registro = {encabezados[i]: valores[i] for i in range(len(encabezados))} #diccionario con el registro
+                    
+                    if dni in valores:
+                        dia = registro["dia"] if "dia" in registro else "no hay dia"
+                        hora = registro["hora"] if "hora" in registro else "no hay hora"
+                        print(f"Tiene turno agendado para el dia {dia} a la hora {hora}.")
+                        return dni
+                    
+            print("El dni no tiene turnos")
+            print("Volviendo al menu principal...")
+            return None
+        
+        except FileNotFoundError:
+            print("Error el archivo no se encontro")
+        except Exception as e:
+            print(f"Error inesperado: {e}")
+            
+    
+    def reservarTurnos():
+        especialidadSeleccionada = 0 
+        while True:
+            especialidades = imprimirEspecialidades(profesionales)
+
+            while True:
+                try:
+                    especialidadSeleccionada = int(input("Ingrese el número de la especialidad que le interesa (o -1 para salir): ")) - 1
+
+                    if especialidadSeleccionada == -2:  # arreglamos indice
+                        print("Finalizó Reserva.")
+                        return
+
+                    if especialidadSeleccionada < -1 or especialidadSeleccionada >= len(especialidades):
+                        print("Selección inválida. Por favor, seleccione un número válido.")
+                        continue
+                    break  
+
+                except ValueError:
+                    print("Error: Debe ingresar un número válido.")
+
+            if especialidadSeleccionada == -2:  # arreglamos indice
+                break
+            
+            #obtenemos la especialidad
+            especialidadBuscada = especialidades[especialidadSeleccionada]
+            imprimirProfesionales(profesionales, especialidadBuscada)
+
+            #seleccionamos el profesional
+            while True:
+                try:
+                    profesionalSeleccionado = int(input("Ingrese el número del profesional que le interesa: ")) - 1
+
+                    if profesionalSeleccionado < 0 or profesionalSeleccionado >= len(especialidades):
+                        print("Selección inválida. Por favor, seleccione un número válido.")
+                        continue  
+                    break 
+
+                except ValueError:
+                    print("Error: Debe ingresar un número válido.")
+
+            dia, hora = imprimirTurnosDisponibles(profesionalSeleccionado + 1)
+
+            seleccionarTurno(
+                profesionalSeleccionado + 1,
+                dia,
+                hora,
+                solicitarDatos()
+            )
+        pass
     
     def isTurnoOcupado(dia, hora, idMedico):
         for turno in turnos:
             if turno["dia"] == dia and turno["hora"] == hora and int(turno["idMedico"]) == int(idMedico):
                 return True
         return False
-
+    
+    
+    
     def imprimirTurnosDisponibles(profesional):
         contador = 0
         opciones = []
@@ -216,9 +310,20 @@ def main():
             print(indice + 1, ")", profesionales[indice]["nombre"], profesionales[indice]["apellido"])
             indice += 1
 
+    def inicio():
+        print("\n--- Clinica del Sol ---")
+        
+        print("\n1) Ver mis turnos")
+        print("2) Modificar un turno")
+        print("3) Reservar un turno")
+        print("-1) Salir")
+        try:
+            opcion = int(input(("\nIngrese un número para continuar: ")))
+            return opcion
+        except ValueError:
+                print("Error: Debe ingresar un numero valido: ")
 
-
-    def solicitarDatos():
+    def solicitarDatos(pacientes):
     #solicita los datos del paciente y valida entradas
         nombre = input("Ingrese su nombre: ")
         while not nombre.isalpha():
@@ -236,60 +341,35 @@ def main():
             dni = input("Ingrese su DNI: ")
 
         id = len(pacientes) + 1
-        pacientes.append([id, nombre, apellido, dni])
+        
+        with open("csv/pacientes.csv", 'a', encoding='utf-8') as archivo:
+            archivo.write(f"{id},{nombre},{apellido},{dni}\n")
+        
         return id
 
 
 
     # Inicio Programa
-    especialidadSeleccionada = 0 
-
-    while especialidadSeleccionada != -1:
-        especialidades = imprimirEspecialidades(profesionales)
-
-        while True:
-            try:
-                especialidadSeleccionada = int(input("Ingrese el número de la especialidad que le interesa (o -1 para salir): ")) - 1
-
-                if especialidadSeleccionada == -2:  # arreglamos indice
-                    print("Finalizó Reserva.")
-                    break
-
-                if especialidadSeleccionada < -1 or especialidadSeleccionada >= len(especialidades):
-                    print("Selección inválida. Por favor, seleccione un número válido.")
-                    continue
-                break  
-
-            except ValueError:
-                print("Error: Debe ingresar un número válido.")
-
-        if especialidadSeleccionada == -2:  # arreglamos indice
-            break
-
-        especialidadBuscada = especialidades[especialidadSeleccionada]
-        imprimirProfesionales(profesionales, especialidadBuscada)
-
-
-        while True:
-            try:
-                profesionalSeleccionado = int(input("Ingrese el número del profesional que le interesa: ")) - 1
-
-                if profesionalSeleccionado < 0 or profesionalSeleccionado >= len(especialidades):
-                    print("Selección inválida. Por favor, seleccione un número válido.")
-                    continue  
-                break 
-
-            except ValueError:
-                print("Error: Debe ingresar un número válido.")
-
-        dia, hora = imprimirTurnosDisponibles(profesionalSeleccionado + 1)
-
-        seleccionarTurno(
-            profesionalSeleccionado + 1,
-            dia,
-            hora,
-            solicitarDatos()
-        )
+    opcion_selec = 0
+    
+    while True:
+            opcion_selec = inicio()
+            if opcion_selec is None:
+                continue
+            
+            if opcion_selec == -1:
+                print("Saliendo...")
+                break
+        
+            if opcion_selec == 1:
+                visualizarTurnos()
+            elif opcion_selec == 2:
+                modificarTurnos()
+            elif opcion_selec == 3:
+                reservarTurnos()
+            else:
+                print("Selección inválida. Porfavor, seleccione un número válido.")
+            
 main()
 
 
