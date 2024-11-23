@@ -81,7 +81,7 @@ def main():
         #ingrese que turno le gustaria modificar
         #elimna el turno
         #aca lo mandaria al seleccione especialidad para que se agende el nuevo numero        
-     pass
+     
         
         
     def visualizarTurnos():
@@ -94,6 +94,9 @@ def main():
                 if not encabezados or encabezados == ['']:
                     print("Archivo vacio")
                     return
+
+                turnos_encontrados = False
+                contador = 1
                 
                 for linea in archivo:
                     valores = linea.strip().split(',')
@@ -102,13 +105,16 @@ def main():
                     if dni in valores:
                         dia = registro["dia"] if "dia" in registro else "no hay dia"
                         hora = registro["hora"] if "hora" in registro else "no hay hora"
-                        print(f"Tiene turno agendado para el dia {dia} a la hora {hora}.")
-                        return dni
-                    
-            print("El dni no tiene turnos")
-            print("Volviendo al menu principal...")
-            return None
-        
+                        print(f"{contador}) Tiene turno agendado para el dia {dia} a las {hora} hs.")
+                        
+                        turnos_encontrados = True
+                        contador += 1
+                if turnos_encontrados:
+                    return dni  # Retorna el dni después de procesar todos los turnos
+                else:
+                    print("No tiene turnos asociados")
+                    print("Volviendo al menu principal...")
+
         except FileNotFoundError:
             print("Error el archivo no se encontro")
         except Exception as e:

@@ -1,4 +1,5 @@
-id,dni,idMedico,dia,hora
-1,46026229,2,Lunes,10
-2,87654321,3,Martes,15
-3,11223344,1,Miércoles,11
+id,dni,idMedico,dia,hora,fecha
+1,46026229,2,Lunes,10,23-11-2024
+2,87654321,3,Martes,15,10-11-2024
+3,11223344,1,Miércoles,11,15-11-2024
+1,46026229,2,Viernes,10,03-11-2024
