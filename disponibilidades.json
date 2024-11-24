@@ -1,0 +1,92 @@
+[
+    {
+        "idMedico": "1",
+        "dia": "Lunes",
+        "horarioEntrada": 13,
+        "horarioSalida": 17
+    },
+    {
+        "idMedico": "1",
+        "dia": "Miércoles",
+        "horarioEntrada": 13,
+        "horarioSalida": 17
+    },
+    {
+        "idMedico": "1",
+        "dia": "Jueves",
+        "horarioEntrada": 13,
+        "horarioSalida": 17
+    },
+    {
+        "idMedico": "2",
+        "dia": "Martes",
+        "horarioEntrada": 13,
+        "horarioSalida": 17
+    },
+    {
+        "idMedico": "2",
+        "dia": "Viernes",
+        "horarioEntrada": 13,
+        "horarioSalida": 17
+    },
+    {
+        "idMedico": "2",
+        "dia": "Sábado",
+        "horarioEntrada": 13,
+        "horarioSalida": 17
+    },
+    {
+        "idMedico": "3",
+        "dia": "Lunes",
+        "horarioEntrada": 10,
+        "horarioSalida": 13
+    },
+    {
+        "idMedico": "3",
+        "dia": "Martes",
+        "horarioEntrada": 14,
+        "horarioSalida": 18
+    },
+    {
+        "idMedico": "4",
+        "dia": "Jueves",
+        "horarioEntrada": 9,
+        "horarioSalida": 13
+    },
+    {
+        "idMedico": "4",
+        "dia": "Lunes",
+        "horarioEntrada": 10,
+        "horarioSalida": 13
+    },
+    {
+        "idMedico": "4",
+        "dia": "Miércoles",
+        "horarioEntrada": 10,
+        "horarioSalida": 12
+    },
+    {
+        "idMedico": "5",
+        "dia": "Martes",
+        "horarioEntrada": 9,
+        "horarioSalida": 12
+    },
+    {
+        "idMedico": "5",
+        "dia": "Jueves",
+        "horarioEntrada": 14,
+        "horarioSalida": 17
+    },
+    {
+        "idMedico": "6",
+        "dia": "Viernes",
+        "horarioEntrada": 9,
+        "horarioSalida": 13
+    },
+    {
+        "idMedico": "7",
+        "dia": "Viernes",
+        "horarioEntrada": 10,
+        "horarioSalida": 13
+    }
+]
