@@ -47,10 +47,8 @@ def visualizarTurnos():
 
     except FileNotFoundError:
         print("Error el archivo no se encontro")
-    except Exception as e:
-        print(f"Error inesperado: {e}")
-
-        
+    except Exception:
+        print(f"Error inesperado")    
 
 def reservarTurnos(profesionales):
     especialidadSeleccionada = 0 
@@ -160,15 +158,7 @@ def imprimirTurnosDisponibles(profesional):
         else:
             print("Debe ingresar un número válido.")
 
-# def eliminarTurno(): 
-    # TODO Implementar la eliminación de un turno
-    # Responsable: Martina Scarone
-
-
 def guardarImprimirTurno(idProfesional, dia, hora, idPaciente):
-    # TODO: Implementar el campo fecha en el archivo de turnos
-    # este campo debe ser la fecha calendario en la que se reservó el turno
-    # Responsable: Joel Dias Correia
     ARCHIVO_TURNOS = "db/turnos.csv"
     archivo_turnos = abrirArchivo(ARCHIVO_TURNOS,"wt")
     id = generarID()
@@ -193,12 +183,3 @@ def generarID():
         json.dump({"id":nuevo_id}, archivo)
         archivo.close()
         return 0
-
-
-    
-    # TODO: Implementar un contador de turnos
-    # para esto se debe leer el archivo de turnos y contar cuantos turnos hay
-    # y devolver el valor del contador
-    # Y borrar la linea que genera un id random en la funcion guardarImprimirTurno
-    # Responsable: Zoe Preiti Tasat
-    return 0

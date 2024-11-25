@@ -14,7 +14,7 @@ def leer_pacientes():
     ruta_archivo = "db/pacientes.csv"
     try: #colocamos un try catch por si el archivo esta vacio
         archivo_pacientes = open(ruta_archivo, "rt")
-        lineas = archivo_pacientes.readlines()
+        lineas = archivo_pacientes.readline()
         if not lineas:
             print("no hay registros almacenados")
             return []
@@ -31,9 +31,9 @@ def leer_pacientes():
     except FileNotFoundError:
         print(f"Error: El archivo {ruta_archivo} no se encontró.")
         return []
-    except IndexError as e:
-        print(f"Error de índice al procesar el archivo: {e}")
+    except IndexError:
+        print(f"Error de índice al procesar el archivo")
         return []
-    except Exception as e:
-        print(f"Error inesperado: {e}")
+    except Exception:
+        print(f"Error inesperado")
         return []
