@@ -166,8 +166,8 @@ def eliminarTurno():
     turno_encontrado = False
     
     try:
-        archivo_original = open(ruta_archivo, "rt", encoding="utf-8")
-        archivo_temp = open(ruta_temp, "wt", encoding="utf-8")
+        archivo_original = open(ruta_archivo, "rt")
+        archivo_temp = open(ruta_temp, "wt")
         
         #leer encabezados
         encabezados = archivo_original.readline()
@@ -193,8 +193,8 @@ def eliminarTurno():
     
     except FileNotFoundError:
         print("El archivo de turnos no se encontró")
-    except Exception as e:
-        print(f"Error inesperado: {e}")
+    except Exception:
+        print(f"Error inesperado")
     finally:
         if archivo_original:
             archivo_original.close()
