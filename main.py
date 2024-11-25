@@ -6,8 +6,9 @@ def main():
     ARCHIVO_PROFESIONALES = "db/profesionales.json"
 
     pacientes = []
-    profesionales = cargarJson(ARCHIVO_PROFESIONALES)
-
+    profesionales = abrirArchivo(ARCHIVO_PROFESIONALES, "rt")
+    profesionales = json.load(profesionales)
+    print(profesionales)
     def inicio():
         print("\n--- Clinica del Sol ---")
         print("\n1) Ver mis turnos")

@@ -1,8 +1,8 @@
+from json import JSONDecodeError
 from especialidades import *
 from inputs import *
 from profesionales import *
 from archivos import *
-import random
 
 def modificarTurnos():
     dni = visualizarTurnos()
@@ -12,39 +12,44 @@ def modificarTurnos():
     
 def visualizarTurnos():
     dni = solicitarDNI()
-    ruta_archivo = "csv/turnos.csv"
+    ruta_archivo = "db/turnos.csv"
     try:
-        with open(ruta_archivo, 'r', encoding='utf-8') as archivo:
-            encabezados = archivo.readline().strip().split(',')
-            
-            if not encabezados or encabezados == ['']:
-                print("Archivo vacio")
-                return
+        archivo = abrirArchivo(ruta_archivo,"rt")
+        encabezados = archivo.readline().strip().split(',')
+        
+        if not encabezados or encabezados == ['']:
+            print("Archivo vacio")
+            archivo.close()
+            return
 
-            turnos_encontrados = False
-            contador = 1
+        turnos_encontrados = False
+        contador = 1
+        
+        for linea in archivo:
+            valores = linea.strip().split(',')
+            registro = {encabezados[i]: valores[i] for i in range(len(encabezados))}
             
-            for linea in archivo:
-                valores = linea.strip().split(',')
-                registro = {encabezados[i]: valores[i] for i in range(len(encabezados))} #diccionario con el registro
+            if dni in valores:
+                dia = registro["dia"] if "dia" in registro else "no hay dia"
+                hora = registro["hora"] if "hora" in registro else "no hay hora"
+                print(f"{contador}) Tiene turno agendado para el dia {dia} a las {hora} hs.")
                 
-                if dni in valores:
-                    dia = registro["dia"] if "dia" in registro else "no hay dia"
-                    hora = registro["hora"] if "hora" in registro else "no hay hora"
-                    print(f"{contador}) Tiene turno agendado para el dia {dia} a las {hora} hs.")
-                    
-                    turnos_encontrados = True
-                    contador += 1
-            if turnos_encontrados:
-                return dni  # Retorna el dni después de procesar todos los turnos
-            else:
-                print("No tiene turnos asociados")
-                print("Volviendo al menu principal...")
+                turnos_encontrados = True
+                contador += 1
+        
+        archivo.close()
+
+        if turnos_encontrados:
+            return dni  # Retorna el dni después de procesar todos los turnos
+        else:
+            print("No tiene turnos asociados")
+            print("Volviendo al menú principal...")
 
     except FileNotFoundError:
         print("Error el archivo no se encontro")
     except Exception as e:
         print(f"Error inesperado: {e}")
+
         
 
 def reservarTurnos(profesionales):
@@ -100,20 +105,24 @@ def reservarTurnos(profesionales):
 
 def isTurnoOcupado(dia, hora, idMedico):
     ARCHIVO_TURNOS = "db/turnos.csv"
-    archivo_turnos = open(ARCHIVO_TURNOS, 'r', encoding='utf-8')
-    lineas = archivo_turnos.readlines()
-    for linea in lineas:
+    archivo_turnos = open(ARCHIVO_TURNOS, "rt")
+    linea = archivo_turnos.readline() # lee el valor de la primer linea
+    while linea != "": # Mientras el archivo no se haya terminado
         valores = linea.strip().split(',')
         if valores[3] == dia and int(valores[4]) == hora and int(valores[2]) == idMedico:
+            # es el turno que estoy buscando
             return True
+        else:
+            # Lee la siguiente linea
+            linea = archivo_turnos.readline()
     return False
 
 def imprimirTurnosDisponibles(profesional):
     contador = 0
     opciones = []
     ARCHIVO_DISPONIBILIDADES = "db/disponibilidades.json"
-    disponibilidades = cargarJson(ARCHIVO_DISPONIBILIDADES)
-
+    disponibilidades = abrirArchivo(ARCHIVO_DISPONIBILIDADES, "rt")
+    disponibilidades = json.load(disponibilidades)
     print("┌" + ("─"*4) + "┬" + ("─"*12) + "┬" + ("─"*10) + "┬" + ("─"*15) + "┐")
     print("│" + " " + "   " + "│" + " " + "Día" + " " * 8 + "│" + " " + "Horario" + "  " + "│" + " " + "Disponibilidad" +"│")
     print("├" + "─"*4 + "┼" + "─"*12 + "┼" + "─"*10 + "┼" + "─"*15 + "┤")
@@ -161,15 +170,32 @@ def guardarImprimirTurno(idProfesional, dia, hora, idPaciente):
     # este campo debe ser la fecha calendario en la que se reservó el turno
     # Responsable: Joel Dias Correia
     ARCHIVO_TURNOS = "db/turnos.csv"
-    archivo_turnos = abrirArchivo(ARCHIVO_TURNOS)
-    id = random.randint(1, 10000) # TODO: Eliminar esta línea, debe ser reemplzada por un contador de turnos
+    archivo_turnos = abrirArchivo(ARCHIVO_TURNOS,"wt")
+    id = generarID()
+    print(id)
     archivo_turnos.write(str(id) + ',' + str(idPaciente) + ',' + str(idProfesional) + ',' + dia + ',' + str(hora) + '\n')
     archivo_turnos.close()
     print("\n-------------------------------------------------" )
     print(f"Turno reservado para el día {dia} a las {hora}:00 hs")
     print("-------------------------------------------------\n" )
 
-def contadorDeturnos():
+def generarID():
+    ARCHIVO_ID_TURNOS = "db/idTurnos.json"
+    try:
+        archivo = abrirArchivo(ARCHIVO_ID_TURNOS,"rt")
+        datos = json.load(archivo)
+        id_actual = datos["id"]
+        nuevo_id = id_actual + 1
+        archivo.close()
+    except (FileNotFoundError, KeyError, JSONDecodeError):
+        nuevo_id = 1
+        archivo = open(ARCHIVO_ID_TURNOS, 'wt')
+        json.dump({"id":nuevo_id}, archivo)
+        archivo.close()
+        return 0
+
+
+    
     # TODO: Implementar un contador de turnos
     # para esto se debe leer el archivo de turnos y contar cuantos turnos hay
     # y devolver el valor del contador
