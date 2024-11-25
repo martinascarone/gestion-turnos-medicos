@@ -158,6 +158,51 @@ def imprimirTurnosDisponibles(profesional):
         else:
             print("Debe ingresar un número válido.")
 
+def eliminarTurno(): 
+    dni = solicitarDNI()
+    ruta_archivo = "db/turnos.csv"
+    ruta_temp = "csv/turnos_temp.csv"
+    
+    turno_encontrado = False
+    
+    try:
+        archivo_original = open(ruta_archivo, "rt", encoding="utf-8")
+        archivo_temp = open(ruta_temp, "wt", encoding="utf-8")
+        
+        #leer encabezados
+        encabezados = archivo_original.readline()
+        print("Encab: ", encabezados)
+        archivo_temp.write(encabezados)
+        
+        #leer linea por linea
+        linea = archivo_original.readline()
+        print("Linea: ", linea)
+        while linea:
+            valores = linea.strip().split(',')
+            if dni in valores:
+                print(f"Turno encontrado")
+                turno_encontrado = True
+                print("Eliminando turno...")
+            else:
+                archivo_temp.write(linea)
+            linea = archivo_original.readline()
+            
+        if not turno_encontrado:
+            print("No se encontraron turnos asociados al DNI ingresado.")
+                
+    
+    except FileNotFoundError:
+        print("El archivo de turnos no se encontró")
+    except Exception as e:
+        print(f"Error inesperado: {e}")
+    finally:
+        if archivo_original:
+            archivo_original.close()
+        if archivo_temp:
+            archivo_temp.close()
+                
+
+
 def guardarImprimirTurno(idProfesional, dia, hora, idPaciente):
     ARCHIVO_TURNOS = "db/turnos.csv"
     archivo_turnos = abrirArchivo(ARCHIVO_TURNOS,"wt")

@@ -12,6 +12,7 @@ def main():
         print("\n1) Ver mis turnos")
         print("2) Reprogramar un turno")
         print("3) Reservar un turno")
+        print("4) Cancelar turno")
         print("-1) Salir")
         try:
             opcion = int(input(("\nIngrese un número para continuar: ")))
@@ -23,19 +24,76 @@ def main():
     opcion_selec = 0
     while True:
             opcion_selec = inicio()
-            if opcion_selec is None:
-                continue
             
-            if opcion_selec == -1:
-                print("Saliendo...")
-                break
+            match opcion_selec:
+                case -1:
+                    print("Saliendo...")
+                    break
         
-            if opcion_selec == 1:
-                visualizarTurnos()
-            elif opcion_selec == 2:
-                modificarTurnos()
-            elif opcion_selec == 3:
-                reservarTurnos(profesionales)
-            else:
-                print("Selección inválida. Porfavor, seleccione un número válido.")
+                case 1:
+                    visualizarTurnos()
+                case 2:
+                    modificarTurnos()
+                case 3:
+                    reservarTurnos(profesionales)
+                case 4:
+                    eliminarTurno()
+                case _:
+                    print("Selección inválida. Porfavor, seleccione un número válido.")
+
+'''
+pacientes_archivo.write(nombre + ',' + apellido + ',' + dni + '\n')
+        pacientes_archivo.close()
+        return dni
+
+    # Inicio Programa
+    especialidadSeleccionada = 0 
+
+    while especialidadSeleccionada != -1:
+        especialidades = imprimirEspecialidades(cargarProfesionales())
+
+        while True:
+            try:
+                especialidadSeleccionada = int(input("Ingrese el número de la especialidad que le interesa (o -1 para salir): ")) - 1
+
+                if especialidadSeleccionada == -2:  # arreglamos indice
+                    print("Finalizó Reserva.")
+                    break
+
+                if especialidadSeleccionada < -1 or especialidadSeleccionada >= len(especialidades):
+                    print("Selección inválida. Por favor, seleccione un número válido.")
+                    continue
+                break  
+
+            except ValueError:
+                print("Error: Debe ingresar un número válido.")
+
+        if especialidadSeleccionada == -2:  # arreglamos indice
+            break
+
+        especialidadBuscada = especialidades[especialidadSeleccionada]
+        imprimirProfesionales(cargarProfesionales(), especialidadBuscada)
+
+
+        while True:
+            try:
+                profesionalSeleccionado = int(input("Ingrese el número del profesional que le interesa: ")) - 1
+
+                if profesionalSeleccionado < 0 or profesionalSeleccionado >= len(especialidades):
+                    print("Selección inválida. Por favor, seleccione un número válido.")
+                    continue  
+                break 
+
+            except ValueError:
+                print("Error: Debe ingresar un número válido.")
+
+        dia, hora = imprimirTurnosDisponibles(profesionalSeleccionado + 1)
+        print(dia, hora)
+    guardarImprimirTurno(
+            profesionalSeleccionado + 1,
+            dia,
+            hora,
+            solicitarDatos()
+        )
+'''       
 main()
