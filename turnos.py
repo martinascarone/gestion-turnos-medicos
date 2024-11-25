@@ -161,7 +161,7 @@ def imprimirTurnosDisponibles(profesional):
 def eliminarTurno(): 
     dni = solicitarDNI()
     ruta_archivo = "db/turnos.csv"
-    ruta_temp = "csv/turnos_temp.csv"
+    ruta_temp = "db/turnos_temp.csv"
     
     turno_encontrado = False
     
@@ -171,16 +171,19 @@ def eliminarTurno():
         
         #leer encabezados
         encabezados = archivo_original.readline()
-        print("Encab: ", encabezados)
+        #print("Encab: ", encabezados)
         archivo_temp.write(encabezados)
         
         #leer linea por linea
         linea = archivo_original.readline()
-        print("Linea: ", linea)
+        #print("Linea: ", linea)
         while linea:
             valores = linea.strip().split(',')
             if dni in valores:
                 print(f"Turno encontrado")
+                #TODO me tendria que dar el/los turnos encontrados
+                #darme a elegir cual quiero seleccionar
+                #borrar el seleecionado
                 turno_encontrado = True
                 print("Eliminando turno...")
             else:
@@ -195,11 +198,11 @@ def eliminarTurno():
         print("El archivo de turnos no se encontró")
     except Exception as e:
         print(f"Error inesperado: {e}")
-    finally:
+    """finally:
         if archivo_original:
             archivo_original.close()
         if archivo_temp:
-            archivo_temp.close()
+            archivo_temp.close()"""
                 
 
 
