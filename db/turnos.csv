@@ -1,3 +1,2 @@
-id,idPaciente,idProfesional,dia,hora,fecha
-4245,3,1,Lunes,13
-8576,4,1,Lunes,14
+id,dni,idMedico,dia,hora
+0,42056873,1,Lunes,14

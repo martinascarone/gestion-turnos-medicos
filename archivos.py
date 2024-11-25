@@ -1,22 +1,20 @@
 import json
 
-def cargarJson(archivo):
-    return json.load(open(archivo , "rt"))
-
-def abrirArchivo(archivo):
-    # Intenta abrir archivo, si no existe lo crea
+def abrirArchivo(archivo,operacion):
     try:
-        return open(archivo , "a")
-    except OSError :
-        return open(archivo , "x")
+        return open(archivo, operacion)
+    except FileNotFoundError:
+        print(f"El archivo {archivo} no existe. Creándolo...")
+        nuevo_archivo = open(archivo, "wt")
+        nuevo_archivo.close()
+        return open(archivo, operacion)
     
 
 def leer_pacientes():
-    ruta_archivo = "csv/pacientes.csv"
+    ruta_archivo = "db/pacientes.csv"
     try: #colocamos un try catch por si el archivo esta vacio
-        with open(ruta_archivo, 'r', encoding='utf-8') as archivo: 
-            lineas = archivo.readlines()
-        # Verificar si el archivo está vacío
+        archivo_pacientes = open(ruta_archivo, "rt")
+        lineas = archivo_pacientes.readlines()
         if not lineas:
             print("no hay registros almacenados")
             return []

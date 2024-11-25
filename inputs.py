@@ -17,13 +17,11 @@ def solicitarDatos():
     while not dni.isdigit() or not len(dni)>=6:
         print("El DNI debe contener solo números.")
         dni = input("Ingrese su DNI: ")
-
-    id = len(pacientes) + 1
     
-    with open("csv/pacientes.csv", 'a', encoding='utf-8') as archivo:
-        archivo.write(f"{id},{nombre},{apellido},{dni}\n")
+    with open("db/pacientes.csv", 'a', encoding='utf-8') as archivo:
+        archivo.write(f"{dni},{nombre},{apellido}\n")
     
-    return id
+    return dni
 
 
 def solicitarDNI():
