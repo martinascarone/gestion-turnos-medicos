@@ -15,17 +15,15 @@ def crearArchTurnos():
         archivo = open(ARCHIVO_TURNOS, "wt")
         archivo.write("dni,idProfesional,dia,hora,fecha\n")
         archivo.close()
-        print("turnos.csv creado")
-    except Exception as e:
-        print(f"Error al crear el archivo: {e}")
+    except Exception:
+        print(f"Error al crear el archivo")
         
 def crearArchPacientes():
     try:
         archivo = open(ARCHIVO_PACIENTE, "wt")
         archivo.close()
-        print("pacientes.csv creado")
-    except Exception as e:
-        print(f"Error al crear el archivo: {e}")
+    except Exception:
+        print(f"Error al crear el archivo")
 
 def verificarExistenciaArchivoTurnos():
     try:

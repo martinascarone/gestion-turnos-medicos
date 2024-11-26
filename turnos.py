@@ -212,7 +212,6 @@ def eliminarTurno():
     print("Seleccione el turno que desea eliminar: ")
     turnos = visualizarTurnos(dni)
     if len(turnos) == 0:
-        print("Usted no tiene turnos.\nVolviendo al menú principal...\n")
         return
     turnoAEliminarIndex = int(input("Ingrese el número del turno que desea eliminar: "))
     if turnoAEliminarIndex < 1 or turnoAEliminarIndex > len(turnos):
