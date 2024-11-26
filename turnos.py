@@ -118,16 +118,19 @@ def reservarTurnos(profesionales):
 def isTurnoOcupado(dia, hora, fecha, idMedico):
     ARCHIVO_TURNOS = "db/turnos.csv"
     archivo_turnos = open(ARCHIVO_TURNOS, "rt")
-    linea = archivo_turnos.readline() # lee el valor de la primer linea
-    while linea != "": # Mientras el archivo no se haya terminado
-        valores = linea.strip().split(',')
-        if valores[2] == dia and int(valores[3]) == hora and valores[4] == fecha  and int(valores[1]) == idMedico:
-            # es el turno que estoy buscando
-            return True
-        else:
-            # Lee la siguiente linea
-            linea = archivo_turnos.readline()
-    return False
+    try:
+        linea = archivo_turnos.readline()  # Lee la primera línea
+        while linea != "":  # Mientras no llegues al final del archivo
+            valores = linea.strip().split(',')
+            if (valores[2] == dia and int(valores[3]) == hora and valores[4] == fecha and int(valores[1]) == idMedico):
+                # Es el turno que estoy buscando
+                return True
+            else:
+                linea = archivo_turnos.readline()
+        return False
+    finally:
+        archivo_turnos.close()
+
 
 def imprimirTurnosDisponibles(profesional):
     contador = 0
