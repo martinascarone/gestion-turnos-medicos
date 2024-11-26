@@ -18,4 +18,7 @@ def obtenerIdDeProfesional(lista,especialidadBuscada,indice):
     return profesionales[indice-1]["id"]
 
 def obtenerProfesionalPorId(lista,id):
-    return list(filter(lambda p: p["id"] == id, lista))[0]
+    for profesional in lista:
+        if profesional["id"] == id:
+            return profesional
+    return False
