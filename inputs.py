@@ -1,3 +1,4 @@
+from archivos import ARCHIVO_PACIENTE
 
 def solicitarDatos():
     # Solicita los datos del paciente y valida entradas
@@ -8,7 +9,7 @@ def solicitarDatos():
         dni = input("Ingrese su DNI: ")
     
     try:
-        pacientes = open("db/pacientes.csv", "rt")
+        pacientes = open(ARCHIVO_PACIENTE, "rt")
         linea = pacientes.readline()
         existe = False
         while linea != "":  # Leer línea por línea
@@ -31,7 +32,7 @@ def solicitarDatos():
                 print("El apellido debe contener solo letras.")
                 apellido = input("Ingrese su apellido: ")
 
-            archivo = open("db/pacientes.csv", "at")
+            archivo = open(ARCHIVO_PACIENTE, "at")
             archivo.write(f"{dni},{nombre},{apellido}\n")
             archivo.close() 
             
@@ -41,7 +42,7 @@ def solicitarDatos():
 
     except FileNotFoundError:
         try:
-            archivo = open("db/pacientes.csv", "wt")
+            archivo = open(ARCHIVO_PACIENTE, "wt")
             archivo.close()
             # Se llama a si misma para volver al flujo normal
             return solicitarDatos()

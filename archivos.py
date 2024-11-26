@@ -1,4 +1,7 @@
 
+ARCHIVO_PACIENTE = "db/pacientes.csv"
+ARCHIVO_TURNOS = "db/turnos.csv"
+
 def abrirArchivo(archivo,operacion):
     try:
         return open(archivo, operacion)
@@ -8,21 +11,32 @@ def abrirArchivo(archivo,operacion):
         return open(archivo, operacion)
     
 def crearArchTurnos():
-    ruta_archivo = "db/turnos.csv"
     try:
-        archivo = open(ruta_archivo, "wt")
+        archivo = open(ARCHIVO_TURNOS, "wt")
         archivo.write("dni,idProfesional,dia,hora,fecha\n")
-        archivo.close
+        archivo.close()
         print("turnos.csv creado")
     except Exception as e:
         print(f"Error al crear el archivo: {e}")
         
 def crearArchPacientes():
-    ruta_archivo = "db/pacientes.csv"
     try:
-        archivo = open(ruta_archivo, "wt")
-        archivo.write("dni,nombre,apellido\n")
-        archivo.close
+        archivo = open(ARCHIVO_PACIENTE, "wt")
+        archivo.close()
         print("pacientes.csv creado")
     except Exception as e:
         print(f"Error al crear el archivo: {e}")
+
+def verificarExistenciaArchivoTurnos():
+    try:
+        archivo = open(ARCHIVO_TURNOS, "rt")
+        archivo.close()
+    except FileNotFoundError:
+        crearArchTurnos()
+
+def verificarExistenciaArchivoPacientes():
+    try:
+        archivo = open(ARCHIVO_PACIENTE, "rt")
+        archivo.close()
+    except FileNotFoundError:
+        crearArchPacientes()

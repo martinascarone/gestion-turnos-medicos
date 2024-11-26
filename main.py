@@ -3,11 +3,13 @@ from turnos import *
 import json
 
 def main():
-    ARCHIVO_PACIENTE = "/db/pacientes.csv"
     ARCHIVO_PROFESIONALES = "db/profesionales.json"
     profesionales = abrirArchivo(ARCHIVO_PROFESIONALES, "rt")
     profesionales = json.load(profesionales)
-    print(profesionales)
+
+    verificarExistenciaArchivoTurnos()
+    verificarExistenciaArchivoPacientes()
+
     def inicio():
         print("\n--- Clinica del Sol ---")
         print("\n1) Ver mis turnos")

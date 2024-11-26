@@ -21,18 +21,10 @@ def proximo_dia_semana(dia_semana):
 
 def visualizarTurnos(dni):
  
-    ruta_archivo = "db/turnos.csv"
+    ruta_archivo = ARCHIVO_TURNOS
     try:
         archivo = abrirArchivo(ruta_archivo,"rt")
         encabezados = archivo.readline().strip().split(',')
-        
-        if not encabezados or encabezados == ['']:
-            archivo.close()
-            archivo = abrirArchivo(ruta_archivo,"wt")
-            archivo.write("dni,idProfesional,dia,hora,fecha\n")
-            archivo.close()
-            visualizarTurnos(dni)
-
         turnos_encontrados = False
         turnos_encontrados_lista = []
         contador = 1
@@ -61,10 +53,8 @@ def visualizarTurnos(dni):
             print("Volviendo al menú principal...")
             return []
         
-    except FileNotFoundError:
-        print("Error el archivo no se encontro.")
-        
-        return []
+    except Exception:
+        print("Ocurrio un error.")
 
 def reservarTurnos(profesionales):
     especialidadSeleccionada = 0 
@@ -116,7 +106,6 @@ def reservarTurnos(profesionales):
     )
 
 def isTurnoOcupado(dia, hora, fecha, idMedico):
-    ARCHIVO_TURNOS = "db/turnos.csv"
     archivo_turnos = open(ARCHIVO_TURNOS, "rt")
     try:
         linea = archivo_turnos.readline()  # Lee la primera línea
@@ -191,9 +180,8 @@ def reprogramarTurno():
         return
     
     turnoAReprogramar = turnos[turnoAReprogramarIndex - 1]
-    ruta_archivo = "db/turnos.csv"
     turnosFinales = []
-    archivo_original_lectura = open(ruta_archivo, "rt")
+    archivo_original_lectura = open(ARCHIVO_TURNOS, "rt")
 
     for linea in archivo_original_lectura:
         valores = linea.strip().split(',')
@@ -202,7 +190,7 @@ def reprogramarTurno():
         else:
             turnosFinales.append(linea)
     archivo_original_lectura.close()
-    archivo_original_escritura = open(ruta_archivo, "wt")
+    archivo_original_escritura = open(ARCHIVO_TURNOS, "wt")
     for turno in turnosFinales:
         archivo_original_escritura.write(turno)
     archivo_original_escritura.close()
@@ -233,9 +221,8 @@ def eliminarTurno():
         return
     
     turnoAEliminar = turnos[turnoAEliminarIndex - 1]
-    ruta_archivo = "db/turnos.csv"
     turnosFinales = []
-    archivo_original_lectura = open(ruta_archivo, "rt")
+    archivo_original_lectura = open(ARCHIVO_TURNOS, "rt")
 
     for linea in archivo_original_lectura:
         valores = linea.strip().split(',')
@@ -244,14 +231,13 @@ def eliminarTurno():
         else:
             turnosFinales.append(linea)
     archivo_original_lectura.close()
-    archivo_original_escritura = open(ruta_archivo, "wt")
+    archivo_original_escritura = open(ARCHIVO_TURNOS, "wt")
     for turno in turnosFinales:
         archivo_original_escritura.write(turno)
     archivo_original_escritura.close()
     print("Turno eliminado con éxito.")
 
 def guardarImprimirTurno(idProfesional, dia, hora, fecha ,idPaciente):
-    ARCHIVO_TURNOS = "db/turnos.csv"
     archivo_turnos = abrirArchivo(ARCHIVO_TURNOS,"at")
     archivo_turnos.write(str(idPaciente) + ',' + str(idProfesional) + ',' + dia + ',' + str(hora) + ',' + fecha + '\n')
     archivo_turnos.close()
