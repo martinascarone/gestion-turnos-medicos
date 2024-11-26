@@ -202,7 +202,7 @@ def reprogramarTurno(profesionales):
     dia, hora, fecha = imprimirTurnosDisponibles(idMedico)
     guardarImprimirTurno(
         profesionales,
-        idMedico,
+        str(idMedico),
         dia,
         hora,
         fecha,
