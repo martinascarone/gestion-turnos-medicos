@@ -171,7 +171,6 @@ def reprogramarTurno():
     print("Seleccione el turno que desea reprogramar: ")
     turnos = visualizarTurnos(dni)
     if len(turnos) == 0:
-        print("Usted no tiene turnos.\nVolviendo al menú principal...\n")
         return
         
     turnoAReprogramarIndex = int(input("Ingrese el número del turno que desea reprogramar: "))
@@ -213,7 +212,7 @@ def eliminarTurno():
     print("Seleccione el turno que desea eliminar: ")
     turnos = visualizarTurnos(dni)
     if len(turnos) == 0:
-        print("Usted no tiene turnos.\n Volviendo al menú principal...\n")
+        print("Usted no tiene turnos.\nVolviendo al menú principal...\n")
         return
     turnoAEliminarIndex = int(input("Ingrese el número del turno que desea eliminar: "))
     if turnoAEliminarIndex < 1 or turnoAEliminarIndex > len(turnos):
