@@ -19,12 +19,6 @@ def proximo_dia_semana(dia_semana):
     proxima_fecha = hoy + timedelta(days=dias_hasta_proximo)
     return proxima_fecha.strftime("%d-%m-%Y")
 
-def modificarTurnos():
-    dni = visualizarTurnos()
-    #ingrese que turno le gustaria modificar
-    #elimna el turno
-    #aca lo mandaria al seleccione especialidad para que se agende el nuevo numero        
-    
 def visualizarTurnos(dni):
  
     ruta_archivo = "db/turnos.csv"
@@ -178,6 +172,45 @@ def imprimirTurnosDisponibles(profesional):
                 return opciones[turnoSeleccionado]["dia"], opciones[turnoSeleccionado]["hora"], opciones[turnoSeleccionado]["fecha"]
         else:
             print("Debe ingresar un número válido.")
+
+def reprogramarTurno(): 
+    dni = solicitarDNI()
+    print("Seleccione el turno que desea reprogramar: ")
+    turnos = visualizarTurnos(dni)
+    turnoAReprogramarIndex = int(input("Ingrese el número del turno que desea reprogramar: "))
+    if turnoAReprogramarIndex < 1 or turnoAReprogramarIndex > len(turnos):
+        print("Selección inválida. Por favor, seleccione un número válido.")
+        return
+    
+    turnoAReprogramar = turnos[turnoAReprogramarIndex - 1]
+    ruta_archivo = "db/turnos.csv"
+    turnosFinales = []
+    archivo_original_lectura = open(ruta_archivo, "rt")
+
+    for linea in archivo_original_lectura:
+        valores = linea.strip().split(',')
+        if turnoAReprogramar["dni"] in valores and turnoAReprogramar["idProfesional"] in valores and turnoAReprogramar["dia"] in valores and turnoAReprogramar["hora"] in valores and turnoAReprogramar["fecha"] in valores:
+            print(f"Cancelando turno")
+        else:
+            turnosFinales.append(linea)
+    archivo_original_lectura.close()
+    archivo_original_escritura = open(ruta_archivo, "wt")
+    for turno in turnosFinales:
+        archivo_original_escritura.write(turno)
+    archivo_original_escritura.close()
+
+
+    dia, hora, fecha = imprimirTurnosDisponibles(turnoAReprogramar["idProfesional"])
+    guardarImprimirTurno(
+        turnoAReprogramar["idProfesional"],
+        dia,
+        hora,
+        fecha,
+        turnoAReprogramar["dni"]
+    )
+
+
+    print("Turno eliminado con éxito.")
 
 def eliminarTurno(): 
     dni = solicitarDNI()

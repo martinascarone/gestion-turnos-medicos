@@ -34,7 +34,7 @@ def main():
                 case 1:
                     visualizarTurnos(False)
                 case 2:
-                    modificarTurnos()
+                    reprogramarTurno()
                 case 3:
                     reservarTurnos(profesionales)
                 case 4:
