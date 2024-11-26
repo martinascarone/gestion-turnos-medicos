@@ -25,7 +25,7 @@ def modificarTurnos():
     #elimna el turno
     #aca lo mandaria al seleccione especialidad para que se agende el nuevo numero        
     
-def visualizarTurnos():
+def visualizarTurnos(dni):
  
     ruta_archivo = "db/turnos.csv"
     try:
@@ -37,11 +37,13 @@ def visualizarTurnos():
             archivo = abrirArchivo(ruta_archivo,"wt")
             archivo.write("dni,idProfesional,dia,hora,fecha\n")
             archivo.close()
-            visualizarTurnos()
+            visualizarTurnos(dni)
 
         turnos_encontrados = False
+        turnos_encontrados_lista = []
         contador = 1
-        dni = solicitarDNI()
+        if not dni:
+            dni = solicitarDNI()
 
         for linea in archivo:
             valores = linea.strip().split(',')
@@ -53,12 +55,13 @@ def visualizarTurnos():
                 fecha = registro["fecha"] if "fecha" in registro else "no hay fecha"
                 print(f"{contador}) Tiene turno agendado para el dia {dia}({fecha}) a las {hora}hs.")
                 turnos_encontrados = True
+                turnos_encontrados_lista.append(registro)
                 contador += 1
         
         archivo.close()
 
         if turnos_encontrados:
-            return dni  # Retorna el dni después de procesar todos los turnos
+            return turnos_encontrados_lista  # Retorna el dni después de procesar todos los turnos
         else:
             print("No tiene turnos asociados")
             print("Volviendo al menú principal...")
@@ -178,51 +181,30 @@ def imprimirTurnosDisponibles(profesional):
 
 def eliminarTurno(): 
     dni = solicitarDNI()
+    print("Seleccione el turno que desea eliminar: ")
+    turnos = visualizarTurnos(dni)
+    turnoAEliminarIndex = int(input("Ingrese el número del turno que desea eliminar: "))
+    if turnoAEliminarIndex < 1 or turnoAEliminarIndex > len(turnos):
+        print("Selección inválida. Por favor, seleccione un número válido.")
+        return
+    
+    turnoAEliminar = turnos[turnoAEliminarIndex - 1]
     ruta_archivo = "db/turnos.csv"
-    ruta_temp = "db/turnos_temp.csv"
-    
-    turno_encontrado = False
-    
-    try:
-        archivo_original = open(ruta_archivo, "rt")
-        archivo_temp = open(ruta_temp, "wt")
-        
-        #leer encabezados
-        encabezados = archivo_original.readline()
-        #print("Encab: ", encabezados)
-        archivo_temp.write(encabezados)
-        
-        #leer linea por linea
-        linea = archivo_original.readline()
-        #print("Linea: ", linea)
-        while linea:
-            valores = linea.strip().split(',')
-            if dni in valores:
-                print(f"Turno encontrado")
-                #TODO me tendria que dar el/los turnos encontrados
-                #darme a elegir cual quiero seleccionar
-                #borrar el seleecionado
-                turno_encontrado = True
-                print("Eliminando turno...")
-            else:
-                archivo_temp.write(linea)
-            linea = archivo_original.readline()
-            
-        if not turno_encontrado:
-            print("No se encontraron turnos asociados al DNI ingresado.")
-                
-    
-    except FileNotFoundError:
-        print("El archivo de turnos no se encontró")
-    except Exception as e:
-        print(f"Error inesperado: {e}")
-    """finally:
-        if archivo_original:
-            archivo_original.close()
-        if archivo_temp:
-            archivo_temp.close()"""
-                
+    turnosFinales = []
+    archivo_original_lectura = open(ruta_archivo, "rt")
 
+    for linea in archivo_original_lectura:
+        valores = linea.strip().split(',')
+        if turnoAEliminar["dni"] in valores and turnoAEliminar["idProfesional"] in valores and turnoAEliminar["dia"] in valores and turnoAEliminar["hora"] in valores and turnoAEliminar["fecha"] in valores:
+            print(f"Eliminando turno")
+        else:
+            turnosFinales.append(linea)
+    archivo_original_lectura.close()
+    archivo_original_escritura = open(ruta_archivo, "wt")
+    for turno in turnosFinales:
+        archivo_original_escritura.write(turno)
+    archivo_original_escritura.close()
+    print("Turno eliminado con éxito.")
 
 def guardarImprimirTurno(idProfesional, dia, hora, fecha ,idPaciente):
     # TODO: Implementar el campo fecha en el archivo de turnos

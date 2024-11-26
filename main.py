@@ -32,7 +32,7 @@ def main():
                     break
         
                 case 1:
-                    visualizarTurnos()
+                    visualizarTurnos(False)
                 case 2:
                     modificarTurnos()
                 case 3:
