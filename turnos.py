@@ -59,11 +59,12 @@ def visualizarTurnos(dni):
         else:
             print("No tiene turnos asociados")
             print("Volviendo al menú principal...")
-
+            return []
+        
     except FileNotFoundError:
-        print("Error el archivo no se encontro")
-    except Exception:
-        print(f"Error inesperado")    
+        print("Error el archivo no se encontro.")
+        
+        return []
 
 def reservarTurnos(profesionales):
     especialidadSeleccionada = 0 
@@ -117,16 +118,19 @@ def reservarTurnos(profesionales):
 def isTurnoOcupado(dia, hora, fecha, idMedico):
     ARCHIVO_TURNOS = "db/turnos.csv"
     archivo_turnos = open(ARCHIVO_TURNOS, "rt")
-    linea = archivo_turnos.readline() # lee el valor de la primer linea
-    while linea != "": # Mientras el archivo no se haya terminado
-        valores = linea.strip().split(',')
-        if valores[3] == dia and int(valores[4]) == hora and valores[5] == fecha  and int(valores[2]) == idMedico:
-            # es el turno que estoy buscando
-            return True
-        else:
-            # Lee la siguiente linea
-            linea = archivo_turnos.readline()
-    return False
+    try:
+        linea = archivo_turnos.readline()  # Lee la primera línea
+        while linea != "":  # Mientras no llegues al final del archivo
+            valores = linea.strip().split(',')
+            if (valores[2] == dia and int(valores[3]) == hora and valores[4] == fecha and int(valores[1]) == idMedico):
+                # Es el turno que estoy buscando
+                return True
+            else:
+                linea = archivo_turnos.readline()
+        return False
+    finally:
+        archivo_turnos.close()
+
 
 def imprimirTurnosDisponibles(profesional):
     contador = 0
@@ -177,6 +181,10 @@ def reprogramarTurno():
     dni = solicitarDNI()
     print("Seleccione el turno que desea reprogramar: ")
     turnos = visualizarTurnos(dni)
+    if len(turnos) == 0:
+        print("Usted no tiene turnos.\nVolviendo al menú principal...\n")
+        return
+        
     turnoAReprogramarIndex = int(input("Ingrese el número del turno que desea reprogramar: "))
     if turnoAReprogramarIndex < 1 or turnoAReprogramarIndex > len(turnos):
         print("Selección inválida. Por favor, seleccione un número válido.")
@@ -199,10 +207,10 @@ def reprogramarTurno():
         archivo_original_escritura.write(turno)
     archivo_original_escritura.close()
 
-
-    dia, hora, fecha = imprimirTurnosDisponibles(turnoAReprogramar["idProfesional"])
+    idMedico = int(turnoAReprogramar["idProfesional"])
+    dia, hora, fecha = imprimirTurnosDisponibles(idMedico)
     guardarImprimirTurno(
-        turnoAReprogramar["idProfesional"],
+        idMedico,
         dia,
         hora,
         fecha,
@@ -216,6 +224,9 @@ def eliminarTurno():
     dni = solicitarDNI()
     print("Seleccione el turno que desea eliminar: ")
     turnos = visualizarTurnos(dni)
+    if len(turnos) == 0:
+        print("Usted no tiene turnos.\n Volviendo al menú principal...\n")
+        return
     turnoAEliminarIndex = int(input("Ingrese el número del turno que desea eliminar: "))
     if turnoAEliminarIndex < 1 or turnoAEliminarIndex > len(turnos):
         print("Selección inválida. Por favor, seleccione un número válido.")
@@ -240,9 +251,6 @@ def eliminarTurno():
     print("Turno eliminado con éxito.")
 
 def guardarImprimirTurno(idProfesional, dia, hora, fecha ,idPaciente):
-    # TODO: Implementar el campo fecha en el archivo de turnos
-    # este campo debe ser la fecha calendario en la que se reservó el turno
-    # Responsable: Joel Dias Correia
     ARCHIVO_TURNOS = "db/turnos.csv"
     archivo_turnos = abrirArchivo(ARCHIVO_TURNOS,"at")
     archivo_turnos.write(str(idPaciente) + ',' + str(idProfesional) + ',' + dia + ',' + str(hora) + ',' + fecha + '\n')
