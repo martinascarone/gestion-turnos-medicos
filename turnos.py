@@ -19,7 +19,7 @@ def proximo_dia_semana(dia_semana):
     proxima_fecha = hoy + timedelta(days=dias_hasta_proximo)
     return proxima_fecha.strftime("%d-%m-%Y")
 
-def visualizarTurnos(dni):
+def visualizarTurnos(profesionales,dni):
  
     ruta_archivo = ARCHIVO_TURNOS
     try:
@@ -39,7 +39,10 @@ def visualizarTurnos(dni):
                 dia = registro["dia"] if "dia" in registro else "no hay dia"
                 hora = registro["hora"] if "hora" in registro else "no hay hora"
                 fecha = registro["fecha"] if "fecha" in registro else "no hay fecha"
-                print(f"{contador}) Tiene turno agendado para el dia {dia}({fecha}) a las {hora}hs.")
+                profesional = obtenerProfesionalPorId(profesionales,registro["idProfesional"])
+                profesionalNombreCompleto = profesional["nombre"] + " " + profesional["apellido"]
+                especialidad = profesional["especialidad"]
+                print(f"{contador}) Tiene turno agendado con {profesionalNombreCompleto} ({especialidad}) para el dia {dia}({fecha}) a las {hora}hs.")
                 turnos_encontrados = True
                 turnos_encontrados_lista.append(registro)
                 contador += 1
@@ -98,6 +101,7 @@ def reservarTurnos(profesionales):
     dia, hora, fecha = imprimirTurnosDisponibles(profesionalSeleccionado)
     idProfesional = obtenerIdDeProfesional(profesionales,especialidadBuscada, profesionalSeleccionado)
     guardarImprimirTurno(
+        profesionales,
         idProfesional,
         dia,
         hora,
@@ -166,10 +170,10 @@ def imprimirTurnosDisponibles(profesional):
         else:
             print("Debe ingresar un número válido.")
 
-def reprogramarTurno(): 
+def reprogramarTurno(profesionales): 
     dni = solicitarDNI()
     print("Seleccione el turno que desea reprogramar: ")
-    turnos = visualizarTurnos(dni)
+    turnos = visualizarTurnos(profesionales,dni)
     if len(turnos) == 0:
         return
         
@@ -197,6 +201,7 @@ def reprogramarTurno():
     idMedico = int(turnoAReprogramar["idProfesional"])
     dia, hora, fecha = imprimirTurnosDisponibles(idMedico)
     guardarImprimirTurno(
+        profesionales,
         idMedico,
         dia,
         hora,
@@ -207,10 +212,10 @@ def reprogramarTurno():
 
     print("Turno eliminado con éxito.")
 
-def eliminarTurno(): 
+def eliminarTurno(profesionales): 
     dni = solicitarDNI()
     print("Seleccione el turno que desea eliminar: ")
-    turnos = visualizarTurnos(dni)
+    turnos = visualizarTurnos(profesionales,dni)
     if len(turnos) == 0:
         return
     turnoAEliminarIndex = int(input("Ingrese el número del turno que desea eliminar: "))
@@ -235,10 +240,14 @@ def eliminarTurno():
     archivo_original_escritura.close()
     print("Turno eliminado con éxito.")
 
-def guardarImprimirTurno(idProfesional, dia, hora, fecha ,idPaciente):
+def guardarImprimirTurno(profesionales,idProfesional, dia, hora, fecha ,idPaciente):
     archivo_turnos = abrirArchivo(ARCHIVO_TURNOS,"at")
     archivo_turnos.write(str(idPaciente) + ',' + str(idProfesional) + ',' + dia + ',' + str(hora) + ',' + fecha + '\n')
     archivo_turnos.close()
+
+    profesional = obtenerProfesionalPorId(profesionales,idProfesional)
+    profesionalNombreCompleto = profesional["nombre"] + " " + profesional["apellido"]
+    especialidad = profesional["especialidad"]
     print("\n-------------------------------------------------" )
-    print(f"Turno reservado para el día {dia}({fecha}) a las {hora}:00 hs.")
+    print(f"Turno reservado con {profesionalNombreCompleto} ({especialidad}) para el día {dia}({fecha}) a las {hora}:00 hs.")
     print("-------------------------------------------------\n" )

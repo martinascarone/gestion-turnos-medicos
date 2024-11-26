@@ -11,7 +11,27 @@ def main():
     verificarExistenciaArchivoPacientes()
 
     def inicio():
-        print("\n--- Clinica del Sol ---")
+        print("                ⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⠀⠀    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                               ⠀")
+        print("                     ⠀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠀⠀⠀⠀⠸⣷⣦⣀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿⣦⠀⠠⠾⠿⣿⣷⠀⠀⠀⠀⠀⣠⣤⣄⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠟⢉⣠⣤⣶⡆⠀⣠⣈⠀⢀⣠⣴⣿⣿⠋⠀⠀⠀⠀                          ")
+        print("                     ⠀⢀⡀⢀⣀⣀⣠⣤⡄⢀⣀⡘⣿⣿⣿⣷⣼⣿⣿⣷⡄⠹⣿⡿⠁⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠻⠿⢿⣿⣿⣿⠁⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⣁⠀⠋⠀⠀⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠀⠀⠀⠈⠻⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⢰⣄⣀⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠀⠀⠀⠀⣠⡀⠀⣴⣿⣿⣿⣿⣿⣿⣿⡿⢿⡿⠀⣾⣿⣿⣿⣿⣶⡄⠀                          ")
+        print("                     ⠀⠀⠀⠀⠀⢀⣾⣿⣷⡀⠻⣿⣿⡿⠻⣿⣿⣿⣿⠀⠀⠈⠉⠉⠉⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠀⣠⣾⡿⠟⠉⠉⠀⢀⡉⠁⠀⠛⠛⢉⣠⣴⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠈⠉⠉⠀⠀⠀⠀⠀⢸⣿⣿⡿⠉⠀⠙⠿⣿⣿⣧⡀⠀⠀⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⠁⠀⠀⠀⠀⠀⠙⠿⣷⠀⠀⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠃⠀⠀⠀⠀⠀⠀⠀                          ")
+        print("                     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                          ")
+        print("   ____   _   _           _                        _          _                   _ ")
+        print("  / ___| | | (_)  _ __   (_)   ___    __ _      __| |   ___  | |    ___    ___   | |")
+        print(" | |     | | | | | '_ \  | |  / __|  / _` |    / _` |  / _ \ | |   / __|  / _ \  | |")
+        print(" | |___  | | | | | | | | | | | (__  | (_| |   | (_| | |  __/ | |   \__ \ | (_) | | |")
+        print("  \____| |_| |_| |_| |_| |_|  \___|  \__,_|    \__,_|  \___| |_|   |___/  \___/  |_|")
+        print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀                                                ⠀")
         print("\n1) Ver mis turnos")
         print("2) Reprogramar un turno")
         print("3) Reservar un turno")
@@ -34,13 +54,13 @@ def main():
                     break
         
                 case 1:
-                    visualizarTurnos(False)
+                    visualizarTurnos(profesionales,False)
                 case 2:
-                    reprogramarTurno()
+                    reprogramarTurno(profesionales)
                 case 3:
                     reservarTurnos(profesionales)
                 case 4:
-                    eliminarTurno()
+                    eliminarTurno(profesionales)
                 case _:
                     print("Selección inválida. Porfavor, seleccione un número válido.")
 main()
