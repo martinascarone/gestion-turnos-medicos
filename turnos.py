@@ -137,9 +137,9 @@ def imprimirTurnosDisponibles(profesional):
     ARCHIVO_DISPONIBILIDADES = "db/disponibilidades.json"
     disponibilidades = abrirArchivo(ARCHIVO_DISPONIBILIDADES, "rt")
     disponibilidades = json.load(disponibilidades)
-    print("┌" + ("─"*4) + "┬" + ("─"*12) + "┬" + ("─"*10) + "┬" + ("─"*15) + "┐")
-    print("│" + " " + "   " + "│" + " " + "Día" + " " * 8 + "│" + " " + "Horario" + "  " + "│" + " " + "Disponibilidad" +"│")
-    print("├" + "─"*4 + "┼" + "─"*12 + "┼" + "─"*10 + "┼" + "─"*15 + "┤")
+    print("┌" + ("─"*4) + "┬" + ("─"*12) + "┬" + ("─"*10) + "┬" + ("─"*15) + "┬" + ("─"*12) + "┐")
+    print("│" + " " + "   " + "│" + " " + "Día" + " " * 8 + "│" + " " + "Horario" + "  " + "│" + " " + "Disponibilidad"+ "│" + " " + "Fecha" + "      " + "│" )
+    print("├" + "─"*4 + "┼" + "─"*12 + "┼" + "─"*10 + "┼" + "─"*15 + "┼" + "─"*12 + "┤")
 
     for turno in disponibilidades:
         if turno["idMedico"] == str(profesional):
@@ -160,7 +160,7 @@ def imprimirTurnosDisponibles(profesional):
                 print(f"│ {contador + 1:<3}│ {dia:<10} │ {hora_actual:<8} │ {disponibilidad_texto:<13} | { fecha } │")
                 contador += 1
 
-    print("└" + "─"*4 + "┴" + "─"*12 + "┴" + "─"*10 + "┴" + "─"*15 + "┘")
+    print("└" + "─"*4 + "┴" + "─"*12 + "┴" + "─"*10 + "┴" + "─"*15 + "┴"+ "─"*12 + "┘")
     
     while True:
         turnoSeleccionado = input("Ingrese el número del turno que desea seleccionar: ")
