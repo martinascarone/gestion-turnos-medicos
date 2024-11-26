@@ -7,7 +7,7 @@ def abrirArchivo(archivo,operacion):
         nuevo_archivo.close()
         return open(archivo, operacion)
     
-def archivoTurnos():
+def crearArchTurnos():
     ruta_archivo = "db/turnos.csv"
     try:
         archivo = open(ruta_archivo, "wt")
@@ -17,7 +17,7 @@ def archivoTurnos():
     except Exception as e:
         print(f"Error al crear el archivo: {e}")
         
-def archivoPacientes():
+def crearArchPacientes():
     ruta_archivo = "db/pacientes.csv"
     try:
         archivo = open(ruta_archivo, "wt")
