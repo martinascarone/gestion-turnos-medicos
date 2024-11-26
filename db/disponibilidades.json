@@ -2,90 +2,105 @@
     {
         "idMedico": "1",
         "dia": "Lunes",
+        "isoday": 1,
         "horarioEntrada": 13,
         "horarioSalida": 17
     },
     {
         "idMedico": "1",
         "dia": "Miércoles",
+        "isoday": 3,
         "horarioEntrada": 13,
         "horarioSalida": 17
     },
     {
         "idMedico": "1",
         "dia": "Jueves",
+        "isoday": 4,
         "horarioEntrada": 13,
         "horarioSalida": 17
     },
     {
         "idMedico": "2",
         "dia": "Martes",
+        "isoday": 2,
         "horarioEntrada": 13,
         "horarioSalida": 17
     },
     {
         "idMedico": "2",
         "dia": "Viernes",
+        "isoday": 5,
         "horarioEntrada": 13,
         "horarioSalida": 17
     },
     {
         "idMedico": "2",
         "dia": "Sábado",
+        "isoday": 6,
         "horarioEntrada": 13,
         "horarioSalida": 17
     },
     {
         "idMedico": "3",
         "dia": "Lunes",
+        "isoday": 1,
         "horarioEntrada": 10,
         "horarioSalida": 13
     },
     {
         "idMedico": "3",
         "dia": "Martes",
+        "isoday": 2,
         "horarioEntrada": 14,
         "horarioSalida": 18
     },
     {
         "idMedico": "4",
         "dia": "Jueves",
+        "isoday": 4,
         "horarioEntrada": 9,
         "horarioSalida": 13
     },
     {
         "idMedico": "4",
         "dia": "Lunes",
+        "isoday": 1,
         "horarioEntrada": 10,
         "horarioSalida": 13
     },
     {
         "idMedico": "4",
         "dia": "Miércoles",
+        "isoday": 3,
         "horarioEntrada": 10,
         "horarioSalida": 12
     },
     {
         "idMedico": "5",
         "dia": "Martes",
+        "isoday": 2,
         "horarioEntrada": 9,
         "horarioSalida": 12
     },
     {
         "idMedico": "5",
         "dia": "Jueves",
+        "isoday": 4,
         "horarioEntrada": 14,
         "horarioSalida": 17
     },
     {
         "idMedico": "6",
         "dia": "Viernes",
+        "isoday": 5,
         "horarioEntrada": 9,
         "horarioSalida": 13
     },
     {
         "idMedico": "7",
         "dia": "Viernes",
+        "isoday": 5,
         "horarioEntrada": 10,
         "horarioSalida": 13
     }

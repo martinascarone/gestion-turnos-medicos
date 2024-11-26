@@ -8,3 +8,11 @@ def imprimirProfesionales(lista, especialidadBuscada):
     while indice < len(profesionales):
         print(indice + 1, ")", profesionales[indice]["nombre"], profesionales[indice]["apellido"])
         indice += 1
+
+    return len(profesionales)
+
+
+def obtenerIdDeProfesional(lista,especialidadBuscada,indice):
+    generarListaProfesionales = lambda lista, especialidadBuscada: list(filter(lambda p: p["especialidad"] == especialidadBuscada, lista))
+    profesionales = generarListaProfesionales(lista, especialidadBuscada)
+    return profesionales[indice-1]["id"]

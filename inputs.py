@@ -1,7 +1,5 @@
-from archivos import leer_pacientes
 
 def solicitarDatos():
-    pacientes = leer_pacientes()
     #solicita los datos del paciente y valida entradas
     nombre = input("Ingrese su nombre: ")
     while not nombre.isalpha():

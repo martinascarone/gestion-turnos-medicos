@@ -1,5 +1,6 @@
 from archivos import *
 from turnos import *
+import json
 
 def main():
     ARCHIVO_PACIENTE = "/db/pacientes.csv"
