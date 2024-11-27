@@ -172,16 +172,21 @@ def imprimirTurnosDisponibles(profesional):
 
 def reprogramarTurno(profesionales): 
     dni = solicitarDNI()
-    print("Seleccione el turno que desea reprogramar: ")
+    print("Turnos programados: ")
     turnos = visualizarTurnos(profesionales,dni)
     if len(turnos) == 0:
-        return
-        
-    turnoAReprogramarIndex = int(input("Ingrese el número del turno que desea reprogramar: "))
-    if turnoAReprogramarIndex < 1 or turnoAReprogramarIndex > len(turnos):
-        print("Selección inválida. Por favor, seleccione un número válido.")
-        return
+        return 
     
+    while True:
+        try:
+            turnoAReprogramarIndex = int(input("Ingrese el número del turno que desea reprogramar: "))
+            if turnoAReprogramarIndex >= 1 and turnoAReprogramarIndex <= len(turnos):
+                break
+            else:
+                print("Número inválido.")
+        except ValueError:
+            print("Entrada inválida. Porfavor, ingrese un número")
+            
     turnoAReprogramar = turnos[turnoAReprogramarIndex - 1]
     turnosFinales = []
     archivo_original_lectura = open(ARCHIVO_TURNOS, "rt")
@@ -209,9 +214,6 @@ def reprogramarTurno(profesionales):
         turnoAReprogramar["dni"]
     )
 
-
-    print("Turno eliminado con éxito.")
-
 def eliminarTurno(profesionales): 
     dni = solicitarDNI()
     print("Seleccione el turno que desea eliminar: ")
@@ -230,7 +232,7 @@ def eliminarTurno(profesionales):
     for linea in archivo_original_lectura:
         valores = linea.strip().split(',')
         if turnoAEliminar["dni"] in valores and turnoAEliminar["idProfesional"] in valores and turnoAEliminar["dia"] in valores and turnoAEliminar["hora"] in valores and turnoAEliminar["fecha"] in valores:
-            print(f"Eliminando turno")
+            print(f"Eliminando turno...")
         else:
             turnosFinales.append(linea)
     archivo_original_lectura.close()
